@@ -2,4 +2,4 @@
 .venv/
 .vscode/
 .temp/
-auth/keys.py
+src/auth/keys.py
