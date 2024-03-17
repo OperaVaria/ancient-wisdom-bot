@@ -36,23 +36,22 @@ see <https://www.gnu.org/licenses/>
 
 # Imports:
 import tweepy
-from datetime import datetime, timedelta
 from backend.assmbl_func import assemble_tweet
 from auth.keys import (
-    awd_access_token_secret,
-    awd_access_token,
-    awd_bearer_token,
-    awd_consumer_key,
-    awd_consumer_secret
+    AWD_ACCESS_TOKEN_SECRET,
+    AWD_ACCESS_TOKEN,
+    AWD_BEARER_TOKEN,
+    AWD_CONSUMER_KEY,
+    AWD_CONSUMER_SECRET
 )
 
 # Set up API login.
 client = tweepy.Client(
-    access_token_secret=awd_access_token_secret,
-    access_token=awd_access_token,
-    bearer_token=awd_bearer_token,
-    consumer_key=awd_consumer_key,
-    consumer_secret=awd_consumer_secret,
+    access_token_secret=AWD_ACCESS_TOKEN_SECRET,
+    access_token=AWD_ACCESS_TOKEN,
+    bearer_token=AWD_BEARER_TOKEN,
+    consumer_key=AWD_CONSUMER_KEY,
+    consumer_secret=AWD_CONSUMER_SECRET,
     wait_on_rate_limit=True
 )
 

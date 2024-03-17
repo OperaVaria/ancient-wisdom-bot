@@ -23,16 +23,16 @@ def db_get():
     # Call select random function.
     wis_tuple = select_random(cur)
     # If result is None (no more unused quotes left).
-    if wis_tuple == None:
+    if wis_tuple is None:
         # Reset "used" values.
         cur.execute("UPDATE wisdoms SET used = 0 WHERE used = 1")
         con.commit()
         # Print notification.
         print("\nNo more items, database reset!\n")
-        # Fetch again.        
-        wis_tuple = select_random(cur) 
+        # Fetch again.
+        wis_tuple = select_random(cur)
     # Create Wisdom object.
-    wis_obj = Wisdom(*wis_tuple)    
+    wis_obj = Wisdom(*wis_tuple)
     # Change "used" value to true/1.
     id_tuple = (wis_obj.id,)
     cur.execute("UPDATE wisdoms SET used = 1 WHERE id_title = ?", id_tuple)
@@ -45,7 +45,7 @@ def select_random(cur):
     """Select a random row from the database."""
     # SQLite "SELECT RANDOM" command.
     com_random = "SELECT * FROM wisdoms WHERE used = 0 ORDER BY RANDOM()"
-    # Fetch row.    
+    # Fetch row.
     res = cur.execute(com_random)
     wis_tuple = res.fetchone()
     return wis_tuple
