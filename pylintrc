@@ -1,4 +1,5 @@
 [MESSAGES CONTROL]
 disable=line-too-long,
+        too-few-public-methods,
         too-many-arguments,
         wrong-import-position,
