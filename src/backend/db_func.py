@@ -9,7 +9,7 @@ Part of the "Ancient Wisdom Daily" project by OperaVaria.
 # Imports:
 import sqlite3
 from pathlib import Path
-from .wisdom_class import Wisdom
+from backend.wisdom_class import Wisdom
 
 # Create an absolute path for the database file.
 db_file = Path(__file__).parents[1].resolve() / "db/wisdoms.db"

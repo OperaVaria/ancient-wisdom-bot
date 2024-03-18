@@ -1,5 +1,6 @@
 **/__pycache__/
+.idea/
+.temp/
 .venv/
 .vscode/
-.temp/
 src/auth/keys.py

@@ -5,7 +5,7 @@ Part of the "Ancient Wisdom Daily" project by OperaVaria.
 """
 
 # Imports:
-from .db_func import db_get
+from backend.db_func import db_get
 
 
 def assemble_tweet():
