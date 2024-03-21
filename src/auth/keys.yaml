@@ -1,0 +1,12 @@
+# Login information file (placeholder).
+
+meta:
+  username: Fake
+  password: Fake
+
+twitter:
+  access_token_secret: Fake
+  access_token: Fake
+  bearer_token: Fake
+  consumer_key: Fake
+  consumer_secret: Fake

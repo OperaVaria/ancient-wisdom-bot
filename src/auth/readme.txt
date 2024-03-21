@@ -1,1 +1,1 @@
-Location of the Twitter authentication data file (keys.py).
+Location for authentication data file (keys.yaml).
