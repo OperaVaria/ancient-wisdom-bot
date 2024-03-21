@@ -58,7 +58,6 @@ def db_reset(con, cur):
     con.commit()
     # Print notification.
     print("\nNo more items, database reset!\n")
-    return
 
 
 def print_remaining(cur):
