@@ -15,13 +15,13 @@ from pathlib import Path
 from backend.assmbl_func import assemble_posts
 
 # Create an absolute path for the database file.
-db_file = Path(__file__).parents[0].resolve() / "db/wisdoms.db"
+db_file = Path(__file__).parents[1].resolve() / "db/wisdoms.db"
 
 
 class Test(unittest.TestCase):
     """Unit tests."""
     def test_tweet_length(self):
-        """Test if all tweets are withing the length limits (280 char)."""
+        """Test if all tweets are within the length limits (280 char)."""
 
         # Get number of rows in db.
         con = sqlite3.connect(db_file)

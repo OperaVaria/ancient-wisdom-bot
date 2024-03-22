@@ -12,7 +12,7 @@ from pathlib import Path
 from backend.classes import Wisdom
 
 # Create an absolute path for the db file.
-db_file = Path(__file__).parents[1].resolve() / "db/wisdoms.db"
+db_file = Path(__file__).parents[2].resolve() / "db/wisdoms.db"
 
 
 def db_get():
@@ -61,7 +61,7 @@ def db_reset(con, cur):
 
 
 def print_remaining(cur):
-    """Print out remaining unused quotes."""
+    """Print out number of remaining unused quotes."""
     cur.execute("SELECT COUNT(*) FROM wisdoms WHERE used = 0")
     rem_quotes = cur.fetchone()[0]
     print(f"{rem_quotes} items remaining in the database.")

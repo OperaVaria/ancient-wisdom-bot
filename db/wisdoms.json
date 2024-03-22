@@ -3,43 +3,38 @@
         "attrib_to": "Attributed to Agathon by Aristotle",
         "comment": "The object of Choice can only be something that is within one's reach. Changing the past is beyond even a god's power.",
         "id_title": "agathon_past",
-        "locus": "𝐀𝐫𝐢𝐬𝐭. 𝑬𝒕𝒉. 𝑵𝒊𝒄. 𝟏𝟏𝟑𝟗𝐛",
+        "locus": "Arist. Eth. Nic. 1139b",
+        "locus_form": "𝐀𝐫𝐢𝐬𝐭. 𝑬𝒕𝒉. 𝑵𝒊𝒄. 𝟏𝟏𝟑𝟗𝐛",
         "quote_eng": "For only this is deprived even from a god, to make undone that has been done.",
         "quote_orig": "Μόνου γὰρ αὐτοῦ καὶ θεὸς στερίσκεται, ἀγένητα ποιεῖν ἅσσ᾽ ἂν ᾖ πεπραγμένα.",
-        "used": 0
+        "used": 1
     },
     {
         "attrib_to": "M. Tullius Cicero",
         "comment": "Became a maxim about wartime emergency measures. In its original context, Cicero advocates for armed self-defence.",
         "id_title": "cicero_inter_arma",
-        "locus": "𝐂𝐢𝐜. 𝑴𝒊𝒍. 𝟏𝟏",
+        "locus": "Cic. Mil. 11",
+        "locus_form": "𝐂𝐢𝐜. 𝑴𝒊𝒍. 𝟏𝟏",
         "quote_eng": "For the laws are silent among arms.",
         "quote_orig": "Silent enim leges inter arma.",
-        "used": 1
-    },
-    {
-        "attrib_to": "Philodemus",
-        "comment": "The Epicurean Tetrapharmakos ('four-part remedy') for the soul against mortal anxiety.",
-        "id_title": "epicurean_tetraphar",
-        "locus": "𝑷𝑯𝒆𝒓𝒄. 𝟏𝟎𝟎𝟓, 𝟒.𝟗–𝟏𝟒",
-        "quote_eng": "God presents no fear, death raises no suspicion, and the good, on one hand, easily obtained, the terrible, on the other, easy to bear.",
-        "quote_orig": "Ἄφοβον ὁ θεός, ἀνύποπτον ὁ θάνατος, καὶ τἀγαθὸν μὲν εὔκτητον, τὸ δὲ δεινὸν εὐεκκαρτέρητον.",
         "used": 0
     },
     {
         "attrib_to": "Attributed to Heraclitus by Plato",
         "comment": "One of the most famous lines attributed to the pre-Socratic philosopher. Encapsulates his view of a Cosmos that is in constant flux.",
         "id_title": "heraclitus_change",
-        "locus": "𝐏𝐥. 𝑪𝒓𝒂. 𝟒𝟎𝟐𝐚",
+        "locus": "Pl. Cra. 402a",
+        "locus_form": "𝐏𝐥. 𝑪𝒓𝒂. 𝟒𝟎𝟐𝐚",
         "quote_eng": "Everything flows and nothing stands still.",
         "quote_orig": "Πάντα χωρεῖ καὶ οὐδὲν μένει.",
-        "used": 1
+        "used": 0
     },
     {
         "attrib_to": "Q. Horatius Flaccus",
         "comment": "One of the cardinal mistakes a poet can commit.",
         "id_title": "horatius_brevity",
-        "locus": "𝐇𝐨𝐫. 𝑨𝒓𝒔 𝑷. 𝟏.𝟐𝟓",
+        "locus": "Hor. Ars P. 1.25",
+        "locus_form": "𝐇𝐨𝐫. 𝑨𝒓𝒔 𝑷. 𝟏.𝟐𝟓",
         "quote_eng": "I strive to be brief, I become obscure.",
         "quote_orig": "Brevis esse laboro, obscurus fio.",
         "used": 1
@@ -48,7 +43,8 @@
         "attrib_to": "Marcus Aurelius quoting Democrates 85.",
         "comment": "External factors are temporal, internal perception is subjective. Keeping these in mind helps to achieve peace in one's soul",
         "id_title": "marc_aur_democrates_change",
-        "locus": "𝐌. 𝐀𝐮𝐫. 𝑴𝒆𝒅. 𝟒.𝟑",
+        "locus": "M. Aur. Med. 4.3",
+        "locus_form": "𝐌. 𝐀𝐮𝐫. 𝑴𝒆𝒅. 𝟒.𝟑",
         "quote_eng": "The universe is change, life is assumption.",
         "quote_orig": "Ὁ κόσμος ἀλλοίωσις, ὁ βίος ὑπόληψις.",
         "used": 0
@@ -57,7 +53,8 @@
         "attrib_to": "Emperor Marcus Aurelius",
         "comment": "The transience of life frequently appears as an incentive to act in the Meditations",
         "id_title": "marc_aur_good",
-        "locus": "𝐌. 𝐀𝐮𝐫. 𝑴𝒆𝒅. 𝟒.𝟏𝟕",
+        "locus": "M. Aur. Med. 4.17",
+        "locus_form": "𝐌. 𝐀𝐮𝐫. 𝑴𝒆𝒅. 𝟒.𝟏𝟕",
         "quote_eng": "Fate hangs above: while you live, while it is possible, become good!",
         "quote_orig": "Τὸ χρεὼν ἐπήρτηται: ἕως ζῇς, ἕως ἔξεστιν, ἀγαθὸς γενοῦ.",
         "used": 0
@@ -66,7 +63,8 @@
         "attrib_to": "Emperor Marcus Aurelius",
         "comment": "Expresses the need to be proper and righteous solely by inner volition.",
         "id_title": "marc_aur_straight",
-        "locus": "𝐌. 𝐀𝐮𝐫. 𝑴𝒆𝒅. 𝟑.𝟓",
+        "locus": "M. Aur. Med. 3.5",
+        "locus_form": "𝐌. 𝐀𝐮𝐫. 𝑴𝒆𝒅. 𝟑.𝟓",
         "quote_eng": "Therefore, one should be straight, not straightened.",
         "quote_orig": "Ὀρθὸν οὖν εἶναι χρή, οὐχὶ ὀρθούμενον.",
         "used": 0
@@ -75,7 +73,8 @@
         "attrib_to": "Petronius Arbiter",
         "comment": "A poet character's explanation for his poor clothing.",
         "id_title": "petronius_rich",
-        "locus": "𝐏𝐞𝐭𝐫𝐨𝐧. 𝑺𝒂𝒕. 𝟖𝟑",
+        "locus": "Petron. Sat. 83",
+        "locus_form": "𝐏𝐞𝐭𝐫𝐨𝐧. 𝑺𝒂𝒕. 𝟖𝟑",
         "quote_eng": "The love of creativity has never made anyone rich.",
         "quote_orig": "Amor ingenii neminem unquam divitem fecit.",
         "used": 0
@@ -84,7 +83,8 @@
         "attrib_to": "M. Tullius Cicero about Socrates",
         "comment": "Famous paraphrase of Socrates' views on the limits of knowledge.",
         "id_title": "socrates_know",
-        "locus": "𝐂𝐢𝐜. 𝑨𝒄𝒂𝒅. 𝒑𝒐𝒔𝒕. 𝟏.𝟏𝟔",
+        "locus": "Cic. Acad. post. 1.16",
+        "locus_form": "𝐂𝐢𝐜. 𝑨𝒄𝒂𝒅. 𝒑𝒐𝒔𝒕. 𝟏.𝟏𝟔",
         "quote_eng": "He himself knows only one thing that he knows nothing.",
         "quote_orig": "Ipse se nihil scire id unum sciat.",
         "used": 0
@@ -93,7 +93,8 @@
         "attrib_to": "Attributed to Socrates by Diogenes Laertius",
         "comment": "Socrates seeing the multitude of wares in the market.",
         "id_title": "socrates_no_need",
-        "locus": "𝐃𝐢𝐨𝐠. 𝐋𝐚𝐞𝐫𝐭. 𝟐.𝟐𝟓",
+        "locus": "Diog. Laert. 2.25",
+        "locus_form": "𝐃𝐢𝐨𝐠. 𝐋𝐚𝐞𝐫𝐭. 𝟐.𝟐𝟓",
         "quote_eng": "How many thing I don't have the need for!",
         "quote_orig": "Πόσων ἐγὼ χρείαν οὐκ ἔχω.",
         "used": 0
