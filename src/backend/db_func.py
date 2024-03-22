@@ -25,7 +25,7 @@ def db_get():
     # If result is None ( = no more unused quotes left).
     if wis_tuple is None:
         # Call database reset function.
-        db_reset(con,cur)
+        db_reset(con, cur)
         # Fetch random again.
         wis_tuple = select_random(cur)
     # Create Wisdom object.
@@ -69,5 +69,5 @@ def print_remaining(cur):
 
 
 # Print on accidental run:
-if __name__ == '__main__':
+if __name__ == "__main__":
     print("Importable module. Not meant to be run!")

@@ -31,16 +31,24 @@ class Wisdom:
         text_post = f'"{self.original}"\n"{self.translation}"\n/ {self.attribution} in {self.locus_formatted} /\n\n{self.comment}'
         return text_post
 
+
 class ImagePost:
     """Instagram image post data in Python object form."""
+
     def __init__(self, wis_obj):
         """Create ImagePost instance from Wisdom object data."""
         # Create background image.
         quote_image = Image.new("RGB", (1080, 1080), (12, 4, 4))
         # Create an absolute path for font files.
-        gentium_plus_reg = Path(__file__).parents[2].resolve() / "assets/fonts/Gentium_Plus/GentiumPlus-Regular.ttf"
-        gentium_plus_bold = Path(__file__).parents[2].resolve() / "assets/fonts/Gentium_Plus/GentiumPlus-Bold.ttf"
-        #Declare fonts:
+        gentium_plus_reg = (
+            Path(__file__).parents[2].resolve()
+            / "assets/fonts/Gentium_Plus/GentiumPlus-Regular.ttf"
+        )
+        gentium_plus_bold = (
+            Path(__file__).parents[2].resolve()
+            / "assets/fonts/Gentium_Plus/GentiumPlus-Bold.ttf"
+        )
+        # Declare fonts:
         font_large_reg = ImageFont.truetype(gentium_plus_reg, 40)
         font_large_bold = ImageFont.truetype(gentium_plus_bold, 40)
         font_small_bold = ImageFont.truetype(gentium_plus_bold, 30)
@@ -62,5 +70,5 @@ class ImagePost:
 
 
 # Print on accidental run:
-if __name__ == '__main__':
+if __name__ == "__main__":
     print("Importable module. Not meant to be run!")

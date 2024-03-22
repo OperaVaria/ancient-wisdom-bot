@@ -19,7 +19,7 @@ from tweepy import OAuth1UserHandler
 
 
 def insta_login(keys):
-    """ Set up Instagram login."""
+    """Set up Instagram login."""
     # Create Client instance.
     in_cl = InstaClient()
     # Load settings.
@@ -29,13 +29,13 @@ def insta_login(keys):
     else:
         in_cl.dump_settings(settings_path)
     # Login.
-    in_cl.login(username=keys["meta"]["username"],password=keys["meta"]["password"])
+    in_cl.login(username=keys["meta"]["username"], password=keys["meta"]["password"])
     return in_cl
 
 
 def threads_login(keys):
-    """ Set up Threads login."""
-    mt_api = ThreadsAPI(keys["meta"]["username"],keys["meta"]["password"])
+    """Set up Threads login."""
+    mt_api = ThreadsAPI(keys["meta"]["username"], keys["meta"]["password"])
     return mt_api
 
 
@@ -46,18 +46,18 @@ def twitter_auth(keys):
         access_token_secret=keys["twitter"]["access_token_secret"],
         access_token=keys["twitter"]["access_token"],
         consumer_key=keys["twitter"]["consumer_key"],
-        consumer_secret=keys["twitter"]["consumer_secret"]
+        consumer_secret=keys["twitter"]["consumer_secret"],
     )
     tw_api = TwAPI(tw_oauth1)
-    # Twitter API v2. 
+    # Twitter API v2.
     tw_cl = TwClient(
         access_token_secret=keys["twitter"]["access_token_secret"],
         access_token=keys["twitter"]["access_token"],
         bearer_token=keys["twitter"]["bearer_token"],
         consumer_key=keys["twitter"]["consumer_key"],
         consumer_secret=keys["twitter"]["consumer_secret"],
-        wait_on_rate_limit=True
-    )       
+        wait_on_rate_limit=True,
+    )
     return tw_api, tw_cl
 
 

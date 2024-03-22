@@ -60,7 +60,7 @@ def main():
     text_post, image_post = assemble_posts()
     # Temporarily save image post jpeg.
     temp_image_path = Path(__file__).parents[0].resolve() / "temp/post.jpg"
-    image_post.image.save(temp_image_path,"JPEG")
+    image_post.image.save(temp_image_path, "JPEG")
     # Post tweet.
     try:
         tw_res = tw_cl.create_tweet(text=text_post)
@@ -88,6 +88,7 @@ def main():
     if os_exists(temp_image_path):
         os_remove(temp_image_path)
     return print("Process completed.")
+
 
 # Launch main function.
 if __name__ == "__main__":

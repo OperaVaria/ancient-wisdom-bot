@@ -20,6 +20,7 @@ db_file = Path(__file__).parents[1].resolve() / "db/wisdoms.db"
 
 class Test(unittest.TestCase):
     """Unit tests."""
+
     def test_tweet_length(self):
         """Test if all tweets are within the length limits (280 char)."""
 
@@ -38,5 +39,5 @@ class Test(unittest.TestCase):
             self.assertLess(tweet_length, 280, "Too long!")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
