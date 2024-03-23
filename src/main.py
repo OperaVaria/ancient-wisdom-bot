@@ -6,15 +6,14 @@ Ancient Greek or Roman quote every day, with translation
 and a short comment.
 
 TODO: 1. Manual testing.
-      2. Implement auto testing functions.
-      3. Steadily add to database.
+      2. Steadily add to database.
 """
 
 # Metadata variables:
 __author__ = "OperaVaria"
 __contact__ = "lcs_it@proton.me"
 __version__ = "1.0.0"
-__date__ = "2024.03.22"
+__date__ = "2024.03.23"
 
 # Licence:
 __license__ = "GPLv3"
@@ -61,10 +60,9 @@ def main():
     # Temporarily save image post jpeg.
     temp_image_path = Path(__file__).parents[0].resolve() / "temp/post.jpg"
     image_post.image.save(temp_image_path, "JPEG")
-    # Post tweet.
+    # Post tweet, if too long, post as picture.
     try:
         tw_res = tw_cl.create_tweet(text=text_post)
-    # If too long, post as picture.
     except errors.BadRequest:
         media_id = tw_api.media_upload(temp_image_path).media_id_string
         tw_res = tw_cl.create_tweet(text=image_post.caption, media_ids=[media_id])

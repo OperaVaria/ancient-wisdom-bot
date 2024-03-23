@@ -12,7 +12,7 @@ import unittest
 from pathlib import Path
 
 # Import functions for testing:
-from backend.assmbl_func import assemble_posts
+from backend.classes import Wisdom
 
 # Create an absolute path for the database file.
 db_file = Path(__file__).parents[1].resolve() / "db/wisdoms.db"
@@ -22,21 +22,22 @@ class Test(unittest.TestCase):
     """Unit tests."""
 
     def test_tweet_length(self):
-        """Test if all tweets are within the length limits (280 char)."""
+        """Test if all text posts are within Twitter length limits (280 char)."""
 
-        # Get number of rows in db.
+        # Create list of all db items.
+        wis_obj_list = []
         con = sqlite3.connect(db_file)
         cur = con.cursor()
-        cur.execute("SELECT COUNT(*) FROM wisdoms")
-        row_number = cur.fetchone()[0]
+        for row in cur.execute("SELECT * FROM wisdoms"):
+            wis_obj_list.append(Wisdom(*row))
         con.close()
 
         # Iterate and assert.
-        for num in range(row_number):
-            print(f"Loop: {num + 1}")
-            test_tweet = assemble_posts()
-            tweet_length = len(test_tweet)
-            self.assertLess(tweet_length, 280, "Too long!")
+        for i in wis_obj_list:
+            text_post = i.create_text_post()
+            post_length = len(text_post)
+            print(f"{i.id}: {post_length}")
+            self.assertLess(post_length, 280, f"{i.id} is too long!")
 
 
 if __name__ == "__main__":

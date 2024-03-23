@@ -14,6 +14,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 class Wisdom:
     """Quote data in Python object form."""
+
     def __init__(self, id_title, quote_orig, quote_eng, attrib_to,locus, locus_form, comment, used):
         """Create Wisdom object instance with attributes fetched from the database."""
         self.id = id_title
