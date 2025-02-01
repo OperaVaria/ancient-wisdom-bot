@@ -2,5 +2,6 @@
 disable=line-too-long,
         too-few-public-methods,
         too-many-arguments,
+        too-many-arguments
         too-many-instance-attributes,
         wrong-import-position
