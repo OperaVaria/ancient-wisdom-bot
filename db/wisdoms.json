@@ -17,7 +17,7 @@
         "locus_form": "𝐂𝐢𝐜. 𝑴𝒊𝒍. 𝟏𝟏",
         "quote_eng": "For the laws are silent among arms.",
         "quote_orig": "Silent enim leges inter arma.",
-        "used": 0
+        "used": 1
     },
     {
         "attrib_to": "Attributed to Heraclitus by Plato",
@@ -27,7 +27,7 @@
         "locus_form": "𝐏𝐥. 𝑪𝒓𝒂. 𝟒𝟎𝟐𝐚",
         "quote_eng": "Everything flows and nothing stands still.",
         "quote_orig": "Πάντα χωρεῖ καὶ οὐδὲν μένει.",
-        "used": 0
+        "used": 1
     },
     {
         "attrib_to": "Q. Horatius Flaccus",
@@ -47,7 +47,7 @@
         "locus_form": "𝐌. 𝐀𝐮𝐫. 𝑴𝒆𝒅. 𝟒.𝟑",
         "quote_eng": "The universe is change, life is assumption.",
         "quote_orig": "Ὁ κόσμος ἀλλοίωσις, ὁ βίος ὑπόληψις.",
-        "used": 0
+        "used": 1
     },
     {
         "attrib_to": "Emperor Marcus Aurelius",
@@ -57,7 +57,7 @@
         "locus_form": "𝐌. 𝐀𝐮𝐫. 𝑴𝒆𝒅. 𝟒.𝟏𝟕",
         "quote_eng": "Fate hangs above: while you live, while it is possible, become good!",
         "quote_orig": "Τὸ χρεὼν ἐπήρτηται: ἕως ζῇς, ἕως ἔξεστιν, ἀγαθὸς γενοῦ.",
-        "used": 0
+        "used": 1
     },
     {
         "attrib_to": "Emperor Marcus Aurelius",
@@ -67,7 +67,7 @@
         "locus_form": "𝐌. 𝐀𝐮𝐫. 𝑴𝒆𝒅. 𝟑.𝟓",
         "quote_eng": "Therefore, one should be straight, not straightened.",
         "quote_orig": "Ὀρθὸν οὖν εἶναι χρή, οὐχὶ ὀρθούμενον.",
-        "used": 0
+        "used": 1
     },
     {
         "attrib_to": "Petronius Arbiter",
@@ -77,7 +77,7 @@
         "locus_form": "𝐏𝐞𝐭𝐫𝐨𝐧. 𝑺𝒂𝒕. 𝟖𝟑",
         "quote_eng": "The love of creativity has never made anyone rich.",
         "quote_orig": "Amor ingenii neminem unquam divitem fecit.",
-        "used": 0
+        "used": 1
     },
     {
         "attrib_to": "M. Tullius Cicero about Socrates",
@@ -87,7 +87,7 @@
         "locus_form": "𝐂𝐢𝐜. 𝑨𝒄𝒂𝒅. 𝒑𝒐𝒔𝒕. 𝟏.𝟏𝟔",
         "quote_eng": "He himself knows only one thing that he knows nothing.",
         "quote_orig": "Ipse se nihil scire id unum sciat.",
-        "used": 0
+        "used": 1
     },
     {
         "attrib_to": "Attributed to Socrates by Diogenes Laertius",
@@ -97,6 +97,76 @@
         "locus_form": "𝐃𝐢𝐨𝐠. 𝐋𝐚𝐞𝐫𝐭. 𝟐.𝟐𝟓",
         "quote_eng": "How many thing I don't have the need for!",
         "quote_orig": "Πόσων ἐγὼ χρείαν οὐκ ἔχω.",
+        "used": 1
+    },
+    {
+        "attrib_to": "Aristotle",
+        "comment": "According to Aristotle, humans inherently strive to from and live in polities.",
+        "id_title": "aristotle_pol_zoon",
+        "locus": "Arist. Pol. 1253a",
+        "locus_form": "𝐀𝐫𝐢𝐬𝐭. 𝑷𝒐𝒍. 𝟏𝟐𝟓𝟑𝐚",
+        "quote_eng": "The human is by nature a political animal.",
+        "quote_orig": "Ὁ ἄνθρωπος φύσει πολιτικὸν ζῷον.",
+        "used": 1
+    },
+    {
+        "attrib_to": "Heraclitus quoted by Plato",
+        "comment": "The Cosmos that is in constant flux is never in the same state twice.",
+        "id_title": "heraclitus_river",
+        "locus": "Pl. Cra. 402a",
+        "locus_form": "𝐏𝐥. 𝑪𝒓𝒂. 𝟒𝟎𝟐𝐚",
+        "quote_eng": "You cannot step into the same river twice.",
+        "quote_orig": "Δὶς ἐς τὸν αὐτὸν ποταμὸν οὐκ ἂν ἐμβαίης.",
+        "used": 1
+    },
+    {
+        "attrib_to": "Plautus",
+        "comment": "The character Sagaristio expressing that no further explanation is needed.",
+        "id_title": "plautus_enough",
+        "locus": "Plaut. Persa 729.",
+        "locus_form": "𝐏𝐥𝐚𝐮𝐭. 𝑷𝒆𝒓𝒔𝒂 𝟕𝟐𝟗.",
+        "quote_eng": "A word is enough for the wise.",
+        "quote_orig": "Dictum sapienti sat est.",
+        "used": 1
+    },
+    {
+        "attrib_to": "Shortened Latin paraphrasing of Aristotle",
+        "comment": "Although a pupil and friend of Plato, Aristotle will criticize the theory of Forms, if needed.",
+        "id_title": "aristotle_plato",
+        "locus": "Arist. Eth. Nic. 1096a",
+        "locus_form": "𝐀𝐫𝐢𝐬𝐭. 𝑬𝒕𝒉. 𝑵𝒊𝒄. 𝟏𝟎𝟗𝟔𝐚",
+        "quote_eng": "Plato is a friend, but a greater friend is truth.",
+        "quote_orig": "Amicus Plato, sed magis amica veritas.",
+        "used": 0
+    },
+    {
+        "attrib_to": "Proverb quoted by Cicero",
+        "comment": "Cicero argues that memories of past unpleasantness can be pleasant.",
+        "id_title": "cicero_work",
+        "locus": "Cic. Fin. 2.32",
+        "locus_form": "𝐂𝐢𝐜. 𝑭𝒊𝒏. 𝟐.𝟑𝟐",
+        "quote_eng": "Pleasant are the labours that have been done.",
+        "quote_orig": "Iucundi acti labores.",
+        "used": 0
+    },
+    {
+        "attrib_to": "M. Tullius Cicero",
+        "comment": "Became an often cited—less followed—maxim.",
+        "id_title": "cicero_law",
+        "locus": "Cic. Leg. 3.8",
+        "locus_form": "𝐂𝐢𝐜. 𝑳𝒆𝒈. 𝟑.𝟖",
+        "quote_eng": "Let the well-being of the people be the highest law.",
+        "quote_orig": "Salus populi suprema lex esto. ",
+        "used": 0
+    },
+    {
+        "attrib_to": "M. Tullius Cicero",
+        "comment": "I.e. the Pythagorians. An interesting oppposition to Arist. Eth. Nic. 1096a.",
+        "id_title": "cicero_to_err",
+        "locus": "Cic. Tusc. 1.39",
+        "locus_form": "𝐂𝐢𝐜. 𝑻𝒖𝒔𝒄. 𝟏.𝟑𝟗",
+        "quote_eng": "By Hercules, I prefer to err with Plato... than to come to truths with those people.",
+        "quote_orig": "Errare mehercule malo cum Platone…  quam cum istis vera sentire.",
         "used": 0
     }
 ]
