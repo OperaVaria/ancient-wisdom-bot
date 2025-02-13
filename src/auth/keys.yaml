@@ -1,5 +1,9 @@
 # Login information file (placeholder).
 
+bluesky:
+  handle: Fake
+  password: Fake
+
 meta:
   username: Fake
   password: Fake

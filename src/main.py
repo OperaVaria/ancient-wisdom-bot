@@ -41,7 +41,7 @@ from tweepy import errors
 from yaml import safe_load
 
 # Imports from local modules:
-from auth.auth_func import insta_login, threads_login, twitter_auth
+from auth.auth_func import bluesky_login, insta_login, threads_login, twitter_auth
 from backend.assmbl_func import assemble_posts
 
 
@@ -52,6 +52,7 @@ def main():
     with open(keys_path, "r", encoding="utf-8") as keys_file:
         keys = safe_load(keys_file)
     # Authenticate APIs
+    bs_cl = bluesky_login(keys)
     in_cl = insta_login(keys)
     mt_api = threads_login(keys)
     tw_api, tw_cl = twitter_auth(keys)
@@ -60,6 +61,12 @@ def main():
     # Temporarily save image post jpeg.
     temp_image_path = Path(__file__).parents[0].resolve() / "temp/post.jpg"
     image_post.image.save(temp_image_path, "JPEG")
+    # Post to Bluesky.
+    bs_res = bs_cl.send_post(text=text_post)
+    if bs_res:
+        print("Bluesky post successful!")
+    else:
+        print("Bluesky posting failed!")
     # Post tweet, if too long, post as picture.
     try:
         tw_res = tw_cl.create_tweet(text=text_post)

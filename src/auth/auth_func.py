@@ -11,11 +11,20 @@ from pathlib import Path
 from os.path import exists as os_exists
 
 # Imports from external packages:
+from atproto import Client as BsClient
 from instagrapi import Client as InstaClient
 from threadspy import ThreadsAPI
 from tweepy import API as TwAPI
 from tweepy import Client as TwClient
 from tweepy import OAuth1UserHandler
+
+# Login functions:
+
+def bluesky_login(keys):
+    """Set up Bluesky login."""
+    bs_cl = BsClient()
+    bs_cl.login(login=keys["bluesky"]["handle"], password=keys["bluesky"]["password"])
+    return bs_cl
 
 
 def insta_login(keys):
