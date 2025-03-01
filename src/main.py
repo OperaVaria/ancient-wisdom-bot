@@ -52,10 +52,10 @@ def main():
     with open(keys_path, "r", encoding="utf-8") as keys_file:
         keys = safe_load(keys_file)
     # Authenticate APIs
-    bs_cl = bluesky_login(keys)
-    in_cl = insta_login(keys)
-    mt_api = threads_login(keys)
-    x_api, x_cl = x_auth(keys)
+    bs_cl = bluesky_login(keys["bluesky"]["handle"], keys["bluesky"]["password"])
+    in_cl = insta_login(keys["meta"]["username"], password=keys["meta"]["password"])
+    mt_api = threads_login(keys["meta"]["username"], keys["meta"]["password"])
+    x_api, x_cl = x_auth(keys["x"])
     # Assemble posts.
     text_post, image_post = assemble_posts()
     # Temporarily save image post jpeg.
