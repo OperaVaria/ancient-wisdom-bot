@@ -41,7 +41,7 @@ from tweepy import errors
 from yaml import safe_load
 
 # Imports from local modules:
-from auth.auth_func import bluesky_login, insta_login, threads_login, twitter_auth
+from auth.auth_func import bluesky_login, insta_login, threads_login, x_auth
 from backend.assmbl_func import assemble_posts
 
 
@@ -55,7 +55,7 @@ def main():
     bs_cl = bluesky_login(keys)
     in_cl = insta_login(keys)
     mt_api = threads_login(keys)
-    tw_api, tw_cl = twitter_auth(keys)
+    x_api, x_cl = x_auth(keys)
     # Assemble posts.
     text_post, image_post = assemble_posts()
     # Temporarily save image post jpeg.
@@ -69,14 +69,14 @@ def main():
         print("Bluesky posting failed!")
     # Post tweet, if too long, post as picture.
     try:
-        tw_res = tw_cl.create_tweet(text=text_post)
+        x_res = x_cl.create_tweet(text=text_post)
     except errors.BadRequest:
-        media_id = tw_api.media_upload(temp_image_path).media_id_string
-        tw_res = tw_cl.create_tweet(text=image_post.caption, media_ids=[media_id])
-    if tw_res:
-        print("Twitter post successful!")
+        media_id = x_api.media_upload(temp_image_path).media_id_string
+        x_res = x_cl.create_tweet(text=image_post.caption, media_ids=[media_id])
+    if x_res:
+        print("X post successful!")
     else:
-        print("Twitter posting failed!")
+        print("X posting failed!")
     # Post Instagram image.
     insta_res = in_cl.photo_upload(temp_image_path, image_post.caption)
     if insta_res:

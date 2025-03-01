@@ -8,7 +8,7 @@ meta:
   username: Fake
   password: Fake
 
-twitter:
+x:
   access_token_secret: Fake
   access_token: Fake
   bearer_token: Fake

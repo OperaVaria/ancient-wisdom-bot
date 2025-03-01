@@ -14,8 +14,8 @@ from os.path import exists as os_exists
 from atproto import Client as BsClient
 from instagrapi import Client as InstaClient
 from threadspy import ThreadsAPI
-from tweepy import API as TwAPI
-from tweepy import Client as TwClient
+from tweepy import API as XAPI
+from tweepy import Client as XClient
 from tweepy import OAuth1UserHandler
 
 # Login functions:
@@ -48,26 +48,26 @@ def threads_login(keys):
     return mt_api
 
 
-def twitter_auth(keys):
-    """Authenticate both versions of the Twitter API."""
-    # Twitter API v1.1.
-    tw_oauth1 = OAuth1UserHandler(
-        access_token_secret=keys["twitter"]["access_token_secret"],
-        access_token=keys["twitter"]["access_token"],
-        consumer_key=keys["twitter"]["consumer_key"],
-        consumer_secret=keys["twitter"]["consumer_secret"],
+def x_auth(keys):
+    """Authenticate both versions of the X API."""
+    # X API v1.1.
+    x_oauth1 = OAuth1UserHandler(
+        access_token_secret=keys["x"]["access_token_secret"],
+        access_token=keys["x"]["access_token"],
+        consumer_key=keys["x"]["consumer_key"],
+        consumer_secret=keys["x"]["consumer_secret"],
     )
-    tw_api = TwAPI(tw_oauth1)
-    # Twitter API v2.
-    tw_cl = TwClient(
-        access_token_secret=keys["twitter"]["access_token_secret"],
-        access_token=keys["twitter"]["access_token"],
-        bearer_token=keys["twitter"]["bearer_token"],
-        consumer_key=keys["twitter"]["consumer_key"],
-        consumer_secret=keys["twitter"]["consumer_secret"],
+    x_api = XAPI(x_oauth1)
+    # X API v2.
+    x_cl = XClient(
+        access_token_secret=keys["x"]["access_token_secret"],
+        access_token=keys["x"]["access_token"],
+        bearer_token=keys["x"]["bearer_token"],
+        consumer_key=keys["x"]["consumer_key"],
+        consumer_secret=keys["x"]["consumer_secret"],
         wait_on_rate_limit=True,
     )
-    return tw_api, tw_cl
+    return x_api, x_cl
 
 
 # Print on accidental run:

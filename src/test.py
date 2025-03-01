@@ -22,7 +22,7 @@ class Test(unittest.TestCase):
     """Unit tests."""
 
     def test_tweet_length(self):
-        """Test if all text posts are within Twitter length limits (280 char)."""
+        """Test if all text posts are within X length limits (280 char)."""
 
         # Create list of all db items.
         wis_obj_list = []
