@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 def assemble_posts():
     """
     Function to assemble posts from Wisdom object data.
-    
+
     Returns:
         Tuple containing text_post string and image_post object.
         None, None tuple if creation fails.
@@ -33,7 +33,7 @@ def assemble_posts():
         # Create ImagePost instance.
         image_post = ImagePost(wis_obj)
         return text_post, image_post
-    except Exception as e:
+    except RuntimeError as e:
         logger.error("Failed to assemble posts: %s", e)
         return None, None
 

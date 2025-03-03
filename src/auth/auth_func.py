@@ -15,7 +15,7 @@ from atproto import Client as BsClient
 from atproto_core.exceptions import AtProtocolError
 from instagrapi import Client as InstaClient
 from instagrapi.exceptions import ClientError, LoginRequired
-# from threadspy import ThreadsAPI
+from threadspy import ThreadsAPI
 from tweepy import API as XAPI
 from tweepy import Client as XClient
 from tweepy import OAuth1UserHandler
@@ -55,7 +55,7 @@ def bluesky_login(login, password):
         raise
 
 
-def insta_login(username, password, settings_path = INSTA_SETTINGS_PATH):
+def insta_login(username, password, settings_path=INSTA_SETTINGS_PATH):
     """
     Set up Instagram login using either username and password
     or previously saved session data.
@@ -82,7 +82,9 @@ def insta_login(username, password, settings_path = INSTA_SETTINGS_PATH):
     if _try_credentials_login(in_cl, username, password, settings_path):
         return in_cl
     # If both login methods fail, raise error.
-    raise ClientError("Login failed: couldn't login user with either password or session")
+    raise ClientError(
+        "Login failed: couldn't login user with either password or session"
+    )
 
 
 def _try_session_login(client, username, password, settings_path):
@@ -98,7 +100,10 @@ def _try_session_login(client, username, password, settings_path):
         # Verify if session is valid.
         try:
             client.get_timeline_feed()
-            logger.info("Successfully logged in to Instagram as %s, using previously saved session.", username)
+            logger.info(
+                "Successfully logged in to Instagram as %s, using previously saved session.",
+                username,
+            )
             return True
         # If not, raise exception.
         except LoginRequired:
@@ -116,9 +121,13 @@ def _try_session_login(client, username, password, settings_path):
 def _try_credentials_login(client, username, password, settings_path):
     """Helper function for insta_login to attempt login via username and password."""
     try:
-        logger.info("Attempting to login via username and password. Username: %s.", username)
+        logger.info(
+            "Attempting to login via username and password. Username: %s.", username
+        )
         if client.login(username, password):
-            logger.info("Successfully logged in to Instagram as %s using credentials.", username)
+            logger.info(
+                "Successfully logged in to Instagram as %s using credentials.", username
+            )
             client.dump_settings(settings_path)
             return True
         return False
@@ -127,33 +136,31 @@ def _try_credentials_login(client, username, password, settings_path):
         return False
 
 
-# Threads functionality currently unavailable due to the difficulties with the Meta API.
-#
-# def threads_login(username, password):
-#     """
-#     Set up Threads login.
-#
-#     Args:
-#         username: Threads username.
-#         password: Threads password.
-#
-#     Returns:
-#         ThreadsAPI: Authenticated Threads API object.
-#     """
-#     mt_api = ThreadsAPI(username, password)
-#     return mt_api
+def threads_login(username, password):
+    """
+    Set up Threads login.
+
+    Args:
+        username: Threads username.
+        password: Threads password.
+
+    Returns:
+        ThreadsAPI: Authenticated Threads API object.
+    """
+    mt_api = ThreadsAPI(username, password)
+    return mt_api
 
 
 def x_auth(x_keys):
     """
     Authenticate both versions of the X API.
-    
+
     Args:
         x_keys: dictionary containing all required keys and tokens.
-        
+
     Returns:
         Tuple containing authenticated API v1.1 and v2 objects.
-    
+
     Raises:
         tweepy.errors.TweepyException: If authentication fails.
     """

@@ -24,10 +24,10 @@ db_file = Path(__file__).parents[2].resolve() / "db/wisdoms.db"
 def db_get():
     """
     Get attributes from database and create a Wisdom instance.
-    
+
     Returns:
         Wisdom: An instance of the Wisdom class with data from the database.
-        
+
     Raises:
         sqlite3.Error: If there's a database-related error.
     """
@@ -62,10 +62,10 @@ def db_get():
 def select_random(cur):
     """
     Select a random row from the database.
-    
+
     Args:
         cur: SQLite cursor object.
-        
+
     Returns:
         wis_tuple/None: A tuple with the row data or None if no rows found.
     """
@@ -80,7 +80,7 @@ def select_random(cur):
 def db_reset(con, cur):
     """
     Reset all 'used' values to False(0).
-    
+
     Args:
         con: SQLite connection object.
         cur: SQLite cursor object.
@@ -95,10 +95,10 @@ def db_reset(con, cur):
 def log_remaining(cur):
     """
     Log and return the number of remaining unused quotes.
-    
+
     Args:
         cur: SQLite cursor object.
-        
+
     Returns:
         int: Number of remaining unused quotes.
     """
