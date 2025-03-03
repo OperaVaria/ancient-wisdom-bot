@@ -18,7 +18,7 @@ from backend.classes import Wisdom
 logger = logging.getLogger(__name__)
 
 # Create an absolute path for the db file.
-db_file = Path(__file__).parents[2].resolve() / "db/wisdoms.db"
+DB_FILE_PATH = Path(__file__).parents[2].resolve() / "db/wisdoms.db"
 
 
 def db_get():
@@ -33,7 +33,7 @@ def db_get():
     """
     try:
         # Database access.
-        con = sqlite3.connect(db_file)
+        con = sqlite3.connect(DB_FILE_PATH)
         cur = con.cursor()
         # Call select random function.
         wis_tuple = select_random(cur)
