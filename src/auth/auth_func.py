@@ -22,7 +22,7 @@ from tweepy import OAuth1UserHandler
 from tweepy.errors import TweepyException
 
 # Setup logging:
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 # Path constants:
 DEFAULT_SETTINGS_DIR = Path(__file__).parent
@@ -134,11 +134,11 @@ def _try_credentials_login(client, username, password, settings_path):
 #     Set up Threads login.
 #
 #     Args:
-#         username: Threads username
-#         password: Threads password
+#         username: Threads username.
+#         password: Threads password.
 #
 #     Returns:
-#         ThreadsAPI: Authenticated Threads API object
+#         ThreadsAPI: Authenticated Threads API object.
 #     """
 #     mt_api = ThreadsAPI(username, password)
 #     return mt_api
@@ -152,10 +152,10 @@ def x_auth(x_keys):
         x_keys: dictionary containing all required keys and tokens.
         
     Returns:
-        Tuple[XAPI, XClient]: tuple containing authenticated API v1.1 and v2 objects.
+        Tuple containing authenticated API v1.1 and v2 objects.
     
     Raises:
-        tweepy.errors.TweepyException: If authentication fails
+        tweepy.errors.TweepyException: If authentication fails.
     """
     # X API v1.1 authentication and verification.
     x_oauth1 = OAuth1UserHandler(
