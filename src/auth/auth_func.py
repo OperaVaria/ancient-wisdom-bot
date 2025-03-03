@@ -9,6 +9,7 @@ Part of the "Ancient Wisdom Daily" project by OperaVaria.
 # Imports from built-in modules:
 import logging
 from pathlib import Path
+from os.path import exists as os_exists
 
 # Imports from external packages:
 from atproto import Client as BsClient
@@ -29,14 +30,13 @@ DEFAULT_SETTINGS_DIR = Path(__file__).parent
 INSTA_SETTINGS_PATH = DEFAULT_SETTINGS_DIR / "settings.json"
 INSTA_DELAY_RANGE = [1, 3]
 
-# Login functions:
 
 def bluesky_login(login, password):
     """
     Set up Bluesky login.
 
     Args:
-        login: Bluesky username
+        login: Bluesky handle.
         password: Bluesky password.
 
     Returns:
@@ -90,11 +90,11 @@ def insta_login(username, password, settings_path=INSTA_SETTINGS_PATH):
 def _try_session_login(client, username, password, settings_path):
     """Helper function for insta_login to attempt login via saved session."""
     # If settings file does not exist: early return False.
-    session = client.load_settings(settings_path)
-    if not session:
+    if not os_exists(settings_path):
         return False
     # Attempt login with error handling.
     try:
+        session = client.load_settings(settings_path)
         client.set_settings(session)
         client.login(username, password)
         # Verify if session is valid.
