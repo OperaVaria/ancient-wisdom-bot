@@ -21,7 +21,9 @@ def assemble_posts():
 
     Returns:
         Tuple containing text_post string and image_post object.
-        None, None tuple if creation fails.
+    
+    Raises:
+        RuntimeError: If creation fails.
     """
     try:
         # Get Wisdom object.
@@ -35,7 +37,7 @@ def assemble_posts():
         return text_post, image_post
     except RuntimeError as e:
         logger.error("Failed to assemble posts: %s", e)
-        return None, None
+        raise
 
 
 # Print on accidental run:
