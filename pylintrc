@@ -1,2 +1,5 @@
 [MESSAGES CONTROL]
-disable=
+disable=too-few-public-methods,
+        too-many-arguments,
+        too-many-instance-attributes,
+        too-few-public-methods

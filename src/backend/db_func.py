@@ -9,7 +9,6 @@ Part of the "Ancient Wisdom Daily" project by OperaVaria.
 # Imports from built-in modules:
 import logging
 import sqlite3
-from pathlib import Path
 
 # Import Wisdom class.
 from backend.classes import Wisdom
@@ -17,11 +16,8 @@ from backend.classes import Wisdom
 # Setup logging.
 logger = logging.getLogger(__name__)
 
-# Create an absolute path for the db file.
-DB_FILE_PATH = Path(__file__).parents[2].resolve() / "db/wisdoms.db"
 
-
-def db_get():
+def db_get(db_file):
     """
     Get attributes from database and create a Wisdom instance.
 
@@ -33,7 +29,7 @@ def db_get():
     """
     try:
         # Database access.
-        con = sqlite3.connect(DB_FILE_PATH)
+        con = sqlite3.connect(db_file)
         cur = con.cursor()
         # Call select random function.
         wis_tuple = select_random(cur)
@@ -89,7 +85,7 @@ def db_reset(con, cur):
     cur.execute("UPDATE wisdoms SET used = 0 WHERE used = 1")
     con.commit()
     # Log notification.
-    logger.info("\nNo more items, database reset!\n")
+    logger.info("\nNo more items, database reset\n")
 
 
 def log_remaining(cur):
@@ -104,7 +100,7 @@ def log_remaining(cur):
     """
     cur.execute("SELECT COUNT(*) FROM wisdoms WHERE used = 0")
     rem_quotes = cur.fetchone()[0]
-    logger.info("%d items remaining in the database.", rem_quotes)
+    logger.info("%d items remaining in the database", rem_quotes)
     return rem_quotes
 
 

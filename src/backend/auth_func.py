@@ -8,7 +8,6 @@ Part of the "Ancient Wisdom Daily" project by OperaVaria.
 
 # Imports from built-in modules:
 import logging
-from pathlib import Path
 from os.path import exists as os_exists
 
 # Imports from external packages:
@@ -24,11 +23,6 @@ from tweepy.errors import TweepyException
 
 # Setup logging:
 logger = logging.getLogger(__name__)
-
-# Path constants:
-DEFAULT_SETTINGS_DIR = Path(__file__).parent
-INSTA_SETTINGS_PATH = DEFAULT_SETTINGS_DIR / "settings.json"
-INSTA_DELAY_RANGE = [1, 3]
 
 
 def bluesky_login(login, password):
@@ -48,14 +42,14 @@ def bluesky_login(login, password):
     bs_cl = BsClient()
     try:
         bs_cl.login(login, password)
-        logger.info("Successfully logged in to Bluesky as %s", login)
+        logger.info("Successfully logged in to Bluesky as: %s", login)
         return bs_cl
     except AtProtocolError as e:
         logger.error("Bluesky login failed: %s", e)
         raise
 
 
-def insta_login(username, password, settings_path=INSTA_SETTINGS_PATH):
+def insta_login(username, password, settings_path, delay_range):
     """
     Set up Instagram login using either username and password
     or previously saved session data.
@@ -63,7 +57,10 @@ def insta_login(username, password, settings_path=INSTA_SETTINGS_PATH):
     Args:
         username: Instagram username.
         password: Instagram password.
-        settings_path: Path to session settings (default: INSTA_SETTINGS_PATH constant).
+        settings_path: Path to session settings.
+        delay_range: list[int] range between two numbers,
+                     random delay in seconds between
+                     requests to mimic live user interaction.
 
     Returns:
         InstaClient: Authenticated Instagram client object.
@@ -74,7 +71,7 @@ def insta_login(username, password, settings_path=INSTA_SETTINGS_PATH):
     # Create Client instance.
     in_cl = InstaClient()
     # Add random delay to mimic live user interactions.
-    in_cl.delay_range = INSTA_DELAY_RANGE
+    in_cl.delay_range = delay_range
     # Try login using saved session.
     if _try_session_login(in_cl, username, password, settings_path):
         return in_cl
@@ -101,20 +98,20 @@ def _try_session_login(client, username, password, settings_path):
         try:
             client.get_timeline_feed()
             logger.info(
-                "Successfully logged in to Instagram as %s, using previously saved session.",
+                "Successfully logged in to Instagram as %s, using previously saved session",
                 username,
             )
             return True
         # If not, raise exception.
         except LoginRequired:
-            logger.error("Session is invalid, need to login via username and password.")
+            logger.error("Session is invalid, need to login via username and password")
             # Preserve device UUIDs across logins
             old_session = client.get_settings()
             client.set_settings({})
             client.set_uuids(old_session["uuids"])
             return False
     except ClientError as e:
-        logger.error("Couldn't login user using session information: %s.", e)
+        logger.error("Couldn't login user using session information: %s", e)
         return False
 
 
@@ -122,17 +119,17 @@ def _try_credentials_login(client, username, password, settings_path):
     """Helper function for insta_login to attempt login via username and password."""
     try:
         logger.info(
-            "Attempting to login via username and password. Username: %s.", username
+            "Attempting to login via username and password. Username: %s", username
         )
         if client.login(username, password):
             logger.info(
-                "Successfully logged in to Instagram as %s using credentials.", username
+                "Successfully logged in to Instagram as %s using credentials", username
             )
             client.dump_settings(settings_path)
             return True
         return False
     except ClientError as e:
-        logger.error("Couldn't login user using username and password: %s.", e)
+        logger.error("Couldn't login user using username and password: %s", e)
         return False
 
 
@@ -174,7 +171,7 @@ def x_auth(x_keys):
     x_api = XAPI(x_oauth1)
     try:
         x_api.verify_credentials()
-        logger.info("Successfully authenticated X API v1.1.")
+        logger.info("Successfully authenticated X API v1.1")
     except TweepyException as e:
         logger.error("X API v1.1 authentication verification failed: %s", e)
         raise

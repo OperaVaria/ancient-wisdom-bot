@@ -15,7 +15,8 @@ from backend.classes import ImagePost
 logger = logging.getLogger(__name__)
 
 
-def assemble_posts():
+def assemble_posts(db_file, image_size, bg_color, text_color,
+                   reg_font, bold_font):
     """
     Function to assemble posts from Wisdom object data.
 
@@ -27,13 +28,14 @@ def assemble_posts():
     """
     try:
         # Get Wisdom object.
-        wis_obj = db_get()
+        wis_obj = db_get(db_file)
         # Log selected quote.
-        print(f"Quote selected: {wis_obj.id}")
+        logger.info("Quote selected: %s", wis_obj.id)
         # Call text post create method.
         text_post = wis_obj.create_text_post()
         # Create ImagePost instance.
-        image_post = ImagePost(wis_obj)
+        image_post = ImagePost(wis_obj, image_size, bg_color, text_color,
+                               reg_font, bold_font)
         return text_post, image_post
     except RuntimeError as e:
         logger.error("Failed to assemble posts: %s", e)

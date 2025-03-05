@@ -9,18 +9,10 @@ Part of the "Ancient Wisdom Daily" project by OperaVaria.
 # Built-in imports:
 import logging
 import textwrap
-from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 # Setup logging.
 logger = logging.getLogger(__name__)
-
-# Configuration constants
-ASSETS_DIR = Path(__file__).parents[2].resolve() / "assets"
-FONT_DIR = ASSETS_DIR / "fonts/Gentium_Plus"
-DEFAULT_BG_COLOR = (12, 4, 4)
-DEFAULT_TEXT_COLOR = (255, 255, 255)
-DEFAULT_IMAGE_SIZE = (1080, 1080)
 
 
 class Wisdom:
@@ -55,9 +47,17 @@ class Wisdom:
 class ImagePost:
     """Instagram image post data in Python object form."""
 
-    def __init__(self, wis_obj):
-        """Create ImagePost instance from Wisdom object data."""
+    def __init__(self, wis_obj, image_size, bg_color, text_color,
+                 reg_font, bold_font):
+        """Create ImagePost instance from Wisdom object data
+        and image attributes."""
         self.caption = wis_obj.comment
+        self.size = image_size
+        self.bg_color = bg_color
+        self.text_color = text_color
+        self.reg_font = reg_font
+        self.bold_font = bold_font
+        # Call create_image method.
         self.image = self.create_image(wis_obj)
 
     def create_image(self, wis_obj):
@@ -68,7 +68,7 @@ class ImagePost:
             Image object.
         """
         # Create background image
-        quote_image = Image.new("RGB", DEFAULT_IMAGE_SIZE, DEFAULT_BG_COLOR)
+        quote_image = Image.new("RGB", self.size, self.bg_color)
         # Load fonts
         font_large_reg, font_large_bold, font_small_bold = self._load_fonts()
         # Create wrapped text
@@ -80,7 +80,7 @@ class ImagePost:
         draw_cont.multiline_text(
             xy=(540, 384),
             text=text_origin,
-            fill=DEFAULT_TEXT_COLOR,
+            fill=self.text_color,
             font=font_large_bold,
             anchor="mm",
             align="center",
@@ -88,7 +88,7 @@ class ImagePost:
         draw_cont.multiline_text(
             xy=(540, 512),
             text=text_transl,
-            fill=DEFAULT_TEXT_COLOR,
+            fill=self.text_color,
             font=font_large_reg,
             anchor="mm",
             align="center",
@@ -96,7 +96,7 @@ class ImagePost:
         draw_cont.multiline_text(
             xy=(540, 768),
             text=text_attrib,
-            fill=DEFAULT_TEXT_COLOR,
+            fill=self.text_color,
             font=font_small_bold,
             anchor="mm",
             align="center",
@@ -111,17 +111,14 @@ class ImagePost:
             Large regular, large bold, small bold font objects.
         """
         try:
-            gentium_reg = FONT_DIR / "GentiumPlus-Regular.ttf"
-            gentium_bold = FONT_DIR / "GentiumPlus-Bold.ttf"
-
-            font_large_reg = ImageFont.truetype(gentium_reg, 40)
-            font_large_bold = ImageFont.truetype(gentium_bold, 40)
-            font_small_bold = ImageFont.truetype(gentium_bold, 30)
+            font_large_reg = ImageFont.truetype(self.reg_font, 40)
+            font_large_bold = ImageFont.truetype(self.bold_font, 40)
+            font_small_bold = ImageFont.truetype(self.bold_font, 30)
 
             return font_large_reg, font_large_bold, font_small_bold
         except (FileNotFoundError, OSError) as e:
             # Fallback to default font if custom fonts aren't available
-            print(f"Font loading error: {e}. Using default font.")
+            logger.error("Font loading error: %s Using default font", e)
             return (ImageFont.load_default(),) * 3
 
     def save_image(self, path):
