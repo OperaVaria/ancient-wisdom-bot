@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 def bluesky_login(login, password):
     """
-    Set up Bluesky login.
+    Set up Bluesky login with error handling.
 
     Args:
         login: Bluesky handle.
@@ -42,7 +42,6 @@ def bluesky_login(login, password):
     bs_cl = BsClient()
     try:
         bs_cl.login(login, password)
-        logger.info("Successfully logged in to Bluesky as: %s", login)
         return bs_cl
     except AtProtocolError as e:
         logger.error("Bluesky login failed: %s", e)
@@ -63,7 +62,7 @@ def insta_login(username, password, settings_path, delay_range):
                      requests to mimic live user interaction.
 
     Returns:
-        InstaClient: Authenticated Instagram client object.
+        in_cl: Authenticated Instagram client object.
 
     Raises:
         ClientError: If login fails with both methods.
@@ -97,10 +96,6 @@ def _try_session_login(client, username, password, settings_path):
         # Verify if session is valid.
         try:
             client.get_timeline_feed()
-            logger.info(
-                "Successfully logged in to Instagram as %s, using previously saved session",
-                username,
-            )
             return True
         # If not, raise exception.
         except LoginRequired:
@@ -135,7 +130,7 @@ def _try_credentials_login(client, username, password, settings_path):
 
 def threads_login(username, password):
     """
-    Set up Threads login.
+    Set up Threads login with error handling.
 
     Args:
         username: Threads username.
@@ -143,9 +138,16 @@ def threads_login(username, password):
 
     Returns:
         ThreadsAPI: Authenticated Threads API object.
+    
+    Raises:
+        Exception: if authentication fails.
     """
-    mt_api = ThreadsAPI(username, password)
-    return mt_api
+    try:
+        mt_api = ThreadsAPI(username, password)
+        return mt_api
+    except Exception as e:
+        logger.error("Threads authentication failed: %s", e)
+        raise
 
 
 def x_auth(x_keys):
@@ -159,7 +161,7 @@ def x_auth(x_keys):
         Tuple containing authenticated API v1.1 and v2 objects.
 
     Raises:
-        tweepy.errors.TweepyException: If authentication fails.
+        TweepyException: If authentication fails.
     """
     # X API v1.1 authentication and verification.
     x_oauth1 = OAuth1UserHandler(
@@ -171,7 +173,6 @@ def x_auth(x_keys):
     x_api = XAPI(x_oauth1)
     try:
         x_api.verify_credentials()
-        logger.info("Successfully authenticated X API v1.1")
     except TweepyException as e:
         logger.error("X API v1.1 authentication verification failed: %s", e)
         raise
@@ -186,7 +187,6 @@ def x_auth(x_keys):
     )
     try:
         x_cl.get_me()
-        logger.info("Successfully authenticated X API v2")
     except TweepyException as e:
         logger.error("X API v2 authentication verification failed: %s", e)
         raise

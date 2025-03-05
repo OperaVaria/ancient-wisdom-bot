@@ -85,7 +85,7 @@ def db_reset(con, cur):
     cur.execute("UPDATE wisdoms SET used = 0 WHERE used = 1")
     con.commit()
     # Log notification.
-    logger.info("\nNo more items, database reset\n")
+    logger.info("No more items, database reset")
 
 
 def log_remaining(cur):

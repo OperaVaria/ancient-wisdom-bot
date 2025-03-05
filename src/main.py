@@ -16,15 +16,14 @@ from os import remove as os_remove
 from os.path import exists as os_exists
 
 # Imports from external packages:
-from tweepy import errors
 from yaml import safe_load
 
 # Imports from local modules:
-from backend.auth_func import bluesky_login, insta_login, threads_login, x_auth
-from backend.assmbl_func import assemble_posts
+from backend.post_func import assemble_posts
+from backend.multith_func import threaded_login, threaded_posting
 from config.path_constants import (DB_FILE, GENTIUM_REG_TTF, GENTIUM_BOLD_TTF,
-                                   LOGIN_KEYS, INSTA_SESSION, TEMP_POST_IMG)
-from config.settings import INSTA_DELAY_RANGE, IMG_SIZE, IMG_BG_COLOR, IMG_TEXT_COLOR
+                                   LOGIN_KEYS, TEMP_POST_IMG)
+from config.settings import IMG_SIZE, IMG_BG_COLOR, IMG_TEXT_COLOR
 
 
 # Metadata variables:
@@ -63,45 +62,16 @@ def main():
     # Load authentication file.
     with open(LOGIN_KEYS, "r", encoding="utf-8") as keys_file:
         keys = safe_load(keys_file)
-    # Authenticate APIs
-    bs_cl = bluesky_login(keys["bluesky"]["handle"], keys["bluesky"]["password"])
-    in_cl = insta_login(keys["meta"]["username"], keys["meta"]["password"],
-                        INSTA_SESSION, INSTA_DELAY_RANGE)
-    mt_api = threads_login(keys["meta"]["username"], keys["meta"]["password"])
-    x_api, x_cl = x_auth(keys["x"])
+    # Authenticate APIs concurrently.
+    bs_cl, in_cl, mt_api, x_api, x_cl = threaded_login(keys)
     # Assemble posts.
     text_post, image_post = assemble_posts(DB_FILE, IMG_SIZE, IMG_BG_COLOR, IMG_TEXT_COLOR,
                                            GENTIUM_REG_TTF, GENTIUM_BOLD_TTF)
     # Temporarily save image post jpeg.
     image_post.save_image(TEMP_POST_IMG)
-    # Post to Bluesky.
-    bs_res = bs_cl.send_post(text=text_post)
-    if bs_res:
-        logger.info("Bluesky post successful")
-    else:
-        logger.error("Bluesky posting failed")
-    # Post tweet, if too long, post as picture.
-    try:
-        x_res = x_cl.create_tweet(text=text_post)
-    except errors.BadRequest:
-        media_id = x_api.media_upload(TEMP_POST_IMG).media_id_string
-        x_res = x_cl.create_tweet(text=image_post.caption, media_ids=[media_id])
-    if x_res:
-        logger.info("X post successful")
-    else:
-        logger.error("X posting failed")
-    # Post Instagram image.
-    insta_res = in_cl.photo_upload(TEMP_POST_IMG, image_post.caption)
-    if insta_res:
-        logger.info("Instagram post successful")
-    else:
-        logger.error("Instagram posting failed")
-    # Post thread.
-    mt_res = mt_api.publish(caption=text_post)
-    if mt_res:
-        logger.info("Threads post successful")
-    else:
-        logger.error("Threads posting failed")
+    # Post concurrently.
+    threaded_posting(bs_cl, in_cl, mt_api, x_api, x_cl,
+                     text_post, image_post, TEMP_POST_IMG)
     # Remove temp image.
     if os_exists(TEMP_POST_IMG):
         os_remove(TEMP_POST_IMG)
