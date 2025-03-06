@@ -9,6 +9,8 @@ Part of the "Ancient Wisdom Daily" project by OperaVaria.
 # Built-in imports:
 import logging
 import textwrap
+
+# Imports from external packages:
 from PIL import Image, ImageDraw, ImageFont
 
 # Setup logging.
@@ -64,18 +66,21 @@ class ImagePost:
         """
         Create and return an image with the wisdom text.
 
+        Args:
+            wis_obj: Wisdom class instance.
+
         Returns:
             Image object.
         """
-        # Create background image
+        # Create background image.
         quote_image = Image.new("RGB", self.size, self.bg_color)
-        # Load fonts
+        # Load fonts with helper method.
         font_large_reg, font_large_bold, font_small_bold = self._load_fonts()
-        # Create wrapped text
+        # Create wrapped text.
         text_origin = textwrap.fill(f'"{wis_obj.original}"', width=40)
         text_transl = textwrap.fill(f'"{wis_obj.translation}"', width=40)
         text_attrib = f"/ {wis_obj.attribution}\n In {wis_obj.locus} /"
-        # Draw text on image
+        # Draw text on image.
         draw_cont = ImageDraw.Draw(quote_image)
         draw_cont.multiline_text(
             xy=(540, 384),
@@ -105,7 +110,8 @@ class ImagePost:
 
     def _load_fonts(self):
         """
-        Helper method. Load and return fonts for image rendering.
+        Helper method for create_image.
+        Load and return fonts for image rendering.
 
         Returns:
             Large regular, large bold, small bold font objects.
@@ -114,7 +120,6 @@ class ImagePost:
             font_large_reg = ImageFont.truetype(self.reg_font, 40)
             font_large_bold = ImageFont.truetype(self.bold_font, 40)
             font_small_bold = ImageFont.truetype(self.bold_font, 30)
-
             return font_large_reg, font_large_bold, font_small_bold
         except (FileNotFoundError, OSError) as e:
             # Fallback to default font if custom fonts aren't available
@@ -122,7 +127,7 @@ class ImagePost:
             return (ImageFont.load_default(),) * 3
 
     def save_image(self, path):
-        """Save the image to the specified path."""
+        """Save the image to a specified path."""
         self.image.save(path, "JPEG")
 
 

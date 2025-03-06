@@ -22,13 +22,15 @@ logger = logging.getLogger(__name__)
 
 def threaded_login(keys):
     """
-    Runs social media login functions concurrently with the concurrent.futures module.
+    Runs social media login functions concurrently 
+    with the concurrent.futures module.
     
     Args:
         keys: login information dictionary.
 
     Returns:
-        Authenticated social media client and API objects.
+        bs_cl, in_cl, mt_api, x_api, x_cl: authenticated
+            social media Client and API objects.
     """
     # Executor context manager.
     with ThreadPoolExecutor(max_workers = 4) as executor:
@@ -47,17 +49,20 @@ def threaded_login(keys):
         x_api, x_cl = x_future.result()
     return bs_cl, in_cl, mt_api, x_api, x_cl
 
+
 def threaded_posting(bs_cl, in_cl, mt_api, x_api, x_cl,
                      text_post, image_post, temp_image_path):
     """
-    Runs social media posting functions concurrently with the concurrent.futures module.
+    Runs social media posting functions concurrently 
+    with the concurrent.futures module.
     
     Args:
-        bs_cl, in_cl, mt_api, x_api, x_cl:
-            authenticated social media client and API objects.
+        bs_cl, in_cl, mt_api, x_api, x_cl: authenticated
+            social media Client and API objects.
         text_post: textual post string.
         image_post: image post object.
-        temp_image_path: path to the temporarily saved image post file.
+        temp_image_path: path to the temporarily
+            saved image post file.
     
     Returns:
         bs_res, in_res, mt_res, x_res: request response objects.

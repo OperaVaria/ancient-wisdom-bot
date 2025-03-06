@@ -31,7 +31,7 @@ def assemble_posts(db_file, image_size, bg_color, text_color,
         Tuple containing text_post string and image_post object.
 
     Raises:
-        RuntimeError: If creation fails.
+        RuntimeError: if creation fails.
     """
     try:
         # Get Wisdom object.
@@ -79,8 +79,8 @@ def in_post(in_cl, image_post, temp_image_path):
 
     Args:
         in_cl: authenticated Instagram client object.
-        image_post: image post object.
-        temp_image_path: path to the temporarily saved image post file.
+        image_post: ImagePost object.
+        temp_image_path: Path to the temporarily saved image post file.
     
     Returns:
         in_res: request response object.
@@ -126,14 +126,14 @@ def x_post(x_api, x_cl, text_post, image_post, image_temp_path):
     Args:
         x_api, x_cl: authenticated X client and API objects.
         text_post: textual post string.
-        image_post: image post object.
-        temp_image_path: path to the temporarily saved image post file.
+        image_post: ImagePost object.
+        temp_image_path: Path to the temporarily saved image post file.
 
     Returns:
         x_res: request response object.
 
     Raises:
-        tweepy.errors.TweepyException: if image post fallback fails.
+        TweepyException: if image post fallback fails.
     """
     try:
         # Attempt to post text.
@@ -148,7 +148,7 @@ def x_post(x_api, x_cl, text_post, image_post, image_temp_path):
             return x_res
         except tw_errors.TweepyException as e:
             # Image fail: raise error.
-            logger.error("Image post to X failed: %s", e)
+            logger.error("Image posting to X failed: %s", e)
             raise
 
 

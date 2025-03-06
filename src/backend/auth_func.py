@@ -34,10 +34,10 @@ def bluesky_login(login, password):
         password: Bluesky password.
 
     Returns:
-        BsClient: Authenticated Bluesky client object.
+        bs_cl: authenticated Bluesky Client object.
 
     Raises:
-        Exception: If login fails.
+        AtProtocolError: if login fails.
     """
     bs_cl = BsClient()
     try:
@@ -50,7 +50,7 @@ def bluesky_login(login, password):
 
 def insta_login(username, password, settings_path, delay_range):
     """
-    Set up Instagram login using either username and password
+    Set up Instagram login using either username and password,
     or previously saved session data.
 
     Args:
@@ -62,10 +62,10 @@ def insta_login(username, password, settings_path, delay_range):
                      requests to mimic live user interaction.
 
     Returns:
-        in_cl: Authenticated Instagram client object.
+        in_cl: authenticated Instagram Client object.
 
     Raises:
-        ClientError: If login fails with both methods.
+        ClientError: if login fails with both methods.
     """
     # Create Client instance.
     in_cl = InstaClient()
@@ -84,7 +84,18 @@ def insta_login(username, password, settings_path, delay_range):
 
 
 def _try_session_login(client, username, password, settings_path):
-    """Helper function for insta_login to attempt login via saved session."""
+    """
+    Helper function for insta_login, attempts login via saved session.
+
+    Args: see above.
+
+    Returns:
+        Login success boolean.
+    
+    Raises:
+        LoginRequired: if session is invalid and verification failed.
+        ClientError: login failed due to other factor.
+    """
     # If settings file does not exist: early return False.
     if not os_exists(settings_path):
         return False
@@ -100,7 +111,7 @@ def _try_session_login(client, username, password, settings_path):
         # If not, raise exception.
         except LoginRequired:
             logger.error("Session is invalid, need to login via username and password")
-            # Preserve device UUIDs across logins
+            # Preserve device UUIDs across logins.
             old_session = client.get_settings()
             client.set_settings({})
             client.set_uuids(old_session["uuids"])
@@ -111,15 +122,20 @@ def _try_session_login(client, username, password, settings_path):
 
 
 def _try_credentials_login(client, username, password, settings_path):
-    """Helper function for insta_login to attempt login via username and password."""
+    """
+    Helper function for insta_login, attempts login via username and password.
+
+    Args: see above.
+
+    Returns:
+        Login success boolean.
+    
+    Raises:
+        ClientError: if login failed.
+    """
     try:
-        logger.info(
-            "Attempting to login via username and password. Username: %s", username
-        )
         if client.login(username, password):
-            logger.info(
-                "Successfully logged in to Instagram as %s using credentials", username
-            )
+            # if successful: dump session settings.
             client.dump_settings(settings_path)
             return True
         return False
@@ -137,10 +153,10 @@ def threads_login(username, password):
         password: Threads password.
 
     Returns:
-        ThreadsAPI: Authenticated Threads API object.
+        mt_api: authenticated ThreadsAPI object.
     
     Raises:
-        Exception: if authentication fails.
+        Exception: if either authentication fails.
     """
     try:
         mt_api = ThreadsAPI(username, password)
@@ -158,7 +174,8 @@ def x_auth(x_keys):
         x_keys: dictionary containing all required keys and tokens.
 
     Returns:
-        Tuple containing authenticated API v1.1 and v2 objects.
+        Tuple containing authenticated
+        API and Client objects (x_api, x_cl).
 
     Raises:
         TweepyException: If authentication fails.

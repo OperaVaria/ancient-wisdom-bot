@@ -21,11 +21,14 @@ def db_get(db_file):
     """
     Get attributes from database and create a Wisdom instance.
 
+    Args:
+        db_file: Path to database file.
+
     Returns:
-        Wisdom: An instance of the Wisdom class with data from the database.
+        Wisdom: an instance of the Wisdom class with data from the database.
 
     Raises:
-        sqlite3.Error: If there's a database-related error.
+        sqlite3.Error: if there is a database-related error.
     """
     try:
         # Database access.
@@ -43,9 +46,10 @@ def db_get(db_file):
         wis_obj = Wisdom(*wis_tuple)
         # Change "used" value to True(1).
         id_tuple = (wis_obj.id,)
+        # Execute, commit.
         cur.execute("UPDATE wisdoms SET used = 1 WHERE id_title = ?", id_tuple)
         con.commit()
-        # Call log remaining function.
+        # Call log_remaining function.
         log_remaining(cur)
         # Close connection.
         con.close()
@@ -63,7 +67,7 @@ def select_random(cur):
         cur: SQLite cursor object.
 
     Returns:
-        wis_tuple/None: A tuple with the row data or None if no rows found.
+        wis_tuple/None: a tuple with the row data or None if no rows found.
     """
     # SQLite "SELECT RANDOM()" command.
     com_random = "SELECT * FROM wisdoms WHERE used = 0 ORDER BY RANDOM()"
