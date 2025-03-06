@@ -91,7 +91,7 @@ def _try_session_login(client, username, password, settings_path):
 
     Returns:
         Login success boolean.
-    
+
     Raises:
         LoginRequired: if session is invalid and verification failed.
         ClientError: login failed due to other factor.
@@ -129,7 +129,7 @@ def _try_credentials_login(client, username, password, settings_path):
 
     Returns:
         Login success boolean.
-    
+
     Raises:
         ClientError: if login failed.
     """
@@ -154,7 +154,7 @@ def threads_login(username, password):
 
     Returns:
         mt_api: authenticated ThreadsAPI object.
-    
+
     Raises:
         Exception: if either authentication fails.
     """
@@ -178,32 +178,30 @@ def x_auth(x_keys):
         API and Client objects (x_api, x_cl).
 
     Raises:
-        TweepyException: If authentication fails.
+        TweepyException: If either authentication fails.
     """
-    # X API v1.1 authentication and verification.
-    x_oauth1 = OAuth1UserHandler(
-        access_token_secret=x_keys["access_token_secret"],
-        access_token=x_keys["access_token"],
-        consumer_key=x_keys["consumer_key"],
-        consumer_secret=x_keys["consumer_secret"],
-    )
-    x_api = XAPI(x_oauth1)
+    # X API v1.1 authentication with error handling.
     try:
-        x_api.verify_credentials()
+        x_oauth1 = OAuth1UserHandler(
+            access_token_secret=x_keys["access_token_secret"],
+            access_token=x_keys["access_token"],
+            consumer_key=x_keys["consumer_key"],
+            consumer_secret=x_keys["consumer_secret"],
+        )
+        x_api = XAPI(x_oauth1)
     except TweepyException as e:
-        logger.error("X API v1.1 authentication verification failed: %s", e)
+        logger.error("X API v1.1 authentication failed: %s", e)
         raise
-    # X API v2 authentication and verification.
-    x_cl = XClient(
-        access_token_secret=x_keys["access_token_secret"],
-        access_token=x_keys["access_token"],
-        bearer_token=x_keys["bearer_token"],
-        consumer_key=x_keys["consumer_key"],
-        consumer_secret=x_keys["consumer_secret"],
-        wait_on_rate_limit=True,
-    )
+    # X API v2 authentication with error handling.
     try:
-        x_cl.get_me()
+        x_cl = XClient(
+            access_token_secret=x_keys["access_token_secret"],
+            access_token=x_keys["access_token"],
+            bearer_token=x_keys["bearer_token"],
+            consumer_key=x_keys["consumer_key"],
+            consumer_secret=x_keys["consumer_secret"],
+            wait_on_rate_limit=True,
+        )
     except TweepyException as e:
         logger.error("X API v2 authentication verification failed: %s", e)
         raise
