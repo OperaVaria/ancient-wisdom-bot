@@ -203,7 +203,7 @@ def x_auth(x_keys):
             wait_on_rate_limit=True,
         )
     except TweepyException as e:
-        logger.error("X API v2 authentication verification failed: %s", e)
+        logger.error("X API v2 authentication failed: %s", e)
         raise
     return x_api, x_cl
 
