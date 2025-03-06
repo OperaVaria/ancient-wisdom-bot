@@ -1,5 +1,11 @@
+[DESIGN]
+
+max-args=10
+max-attributes=10
+max-positional-arguments=10
+min-public-methods=1
+
+
 [MESSAGES CONTROL]
-disable=too-few-public-methods,
-        too-many-arguments,
-        too-many-instance-attributes,
-        too-few-public-methods
+
+disable=import-error
