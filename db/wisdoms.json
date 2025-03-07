@@ -7,7 +7,7 @@
         "locus_form": "𝐀𝐫𝐢𝐬𝐭. 𝑬𝒕𝒉. 𝑵𝒊𝒄. 𝟏𝟏𝟑𝟗𝐛",
         "quote_eng": "For only this is deprived even from a god, to make undone that has been done.",
         "quote_orig": "Μόνου γὰρ αὐτοῦ καὶ θεὸς στερίσκεται, ἀγένητα ποιεῖν ἅσσ᾽ ἂν ᾖ πεπραγμένα.",
-        "used": 1
+        "used": 0
     },
     {
         "attrib_to": "M. Tullius Cicero",
@@ -17,17 +17,17 @@
         "locus_form": "𝐂𝐢𝐜. 𝑴𝒊𝒍. 𝟏𝟏",
         "quote_eng": "For the laws are silent among arms.",
         "quote_orig": "Silent enim leges inter arma.",
-        "used": 1
+        "used": 0
     },
     {
         "attrib_to": "Attributed to Heraclitus by Plato",
-        "comment": "One of the most famous lines attributed to the pre-Socratic philosopher. Encapsulates his view of a Cosmos that is in constant flux.",
-        "id_title": "heraclitus_change",
+        "comment": "One of the most famous lines attributed to the pre-Socratic philosopher. Encapsulates a view of a Cosmos that is in constant flux.",
+        "id_title": "heraclitus_flow",
         "locus": "Pl. Cra. 402a",
         "locus_form": "𝐏𝐥. 𝑪𝒓𝒂. 𝟒𝟎𝟐𝐚",
         "quote_eng": "Everything flows and nothing stands still.",
         "quote_orig": "Πάντα χωρεῖ καὶ οὐδὲν μένει.",
-        "used": 1
+        "used": 0
     },
     {
         "attrib_to": "Q. Horatius Flaccus",
@@ -37,27 +37,27 @@
         "locus_form": "𝐇𝐨𝐫. 𝑨𝒓𝒔 𝑷. 𝟏.𝟐𝟓",
         "quote_eng": "I strive to be brief, I become obscure.",
         "quote_orig": "Brevis esse laboro, obscurus fio.",
-        "used": 1
+        "used": 0
     },
     {
-        "attrib_to": "Marcus Aurelius quoting Democrates 85.",
-        "comment": "External factors are temporal, internal perception is subjective. Keeping these in mind helps to achieve peace in one's soul",
+        "attrib_to": "Marcus Aurelius quoting Democrates",
+        "comment": "External factors are temporal, internal perception is subjective. Keeping these in mind helps to achieve peace in one's soul.",
         "id_title": "marc_aur_democrates_change",
         "locus": "M. Aur. Med. 4.3",
         "locus_form": "𝐌. 𝐀𝐮𝐫. 𝑴𝒆𝒅. 𝟒.𝟑",
         "quote_eng": "The universe is change, life is assumption.",
         "quote_orig": "Ὁ κόσμος ἀλλοίωσις, ὁ βίος ὑπόληψις.",
-        "used": 1
+        "used": 0
     },
     {
         "attrib_to": "Emperor Marcus Aurelius",
-        "comment": "The transience of life frequently appears as an incentive to act in the Meditations",
+        "comment": "The transience of life frequently appears as an incentive to act in the Meditations.",
         "id_title": "marc_aur_good",
         "locus": "M. Aur. Med. 4.17",
         "locus_form": "𝐌. 𝐀𝐮𝐫. 𝑴𝒆𝒅. 𝟒.𝟏𝟕",
         "quote_eng": "Fate hangs above: while you live, while it is possible, become good!",
         "quote_orig": "Τὸ χρεὼν ἐπήρτηται: ἕως ζῇς, ἕως ἔξεστιν, ἀγαθὸς γενοῦ.",
-        "used": 1
+        "used": 0
     },
     {
         "attrib_to": "Emperor Marcus Aurelius",
@@ -67,7 +67,7 @@
         "locus_form": "𝐌. 𝐀𝐮𝐫. 𝑴𝒆𝒅. 𝟑.𝟓",
         "quote_eng": "Therefore, one should be straight, not straightened.",
         "quote_orig": "Ὀρθὸν οὖν εἶναι χρή, οὐχὶ ὀρθούμενον.",
-        "used": 1
+        "used": 0
     },
     {
         "attrib_to": "Petronius Arbiter",
@@ -77,7 +77,7 @@
         "locus_form": "𝐏𝐞𝐭𝐫𝐨𝐧. 𝑺𝒂𝒕. 𝟖𝟑",
         "quote_eng": "The love of creativity has never made anyone rich.",
         "quote_orig": "Amor ingenii neminem unquam divitem fecit.",
-        "used": 1
+        "used": 0
     },
     {
         "attrib_to": "M. Tullius Cicero about Socrates",
@@ -87,7 +87,7 @@
         "locus_form": "𝐂𝐢𝐜. 𝑨𝒄𝒂𝒅. 𝒑𝒐𝒔𝒕. 𝟏.𝟏𝟔",
         "quote_eng": "He himself knows only one thing that he knows nothing.",
         "quote_orig": "Ipse se nihil scire id unum sciat.",
-        "used": 1
+        "used": 0
     },
     {
         "attrib_to": "Attributed to Socrates by Diogenes Laertius",
@@ -97,7 +97,7 @@
         "locus_form": "𝐃𝐢𝐨𝐠. 𝐋𝐚𝐞𝐫𝐭. 𝟐.𝟐𝟓",
         "quote_eng": "How many thing I don't have the need for!",
         "quote_orig": "Πόσων ἐγὼ χρείαν οὐκ ἔχω.",
-        "used": 1
+        "used": 0
     },
     {
         "attrib_to": "Aristotle",
@@ -107,17 +107,17 @@
         "locus_form": "𝐀𝐫𝐢𝐬𝐭. 𝑷𝒐𝒍. 𝟏𝟐𝟓𝟑𝐚",
         "quote_eng": "The human is by nature a political animal.",
         "quote_orig": "Ὁ ἄνθρωπος φύσει πολιτικὸν ζῷον.",
-        "used": 1
+        "used": 0
     },
     {
         "attrib_to": "Heraclitus quoted by Plato",
-        "comment": "The Cosmos that is in constant flux is never in the same state twice.",
-        "id_title": "heraclitus_river",
+        "comment": "Possible interpretation: the Cosmos that is in constant flux is never in the same state twice.",
+        "id_title": "heraclitus_river1",
         "locus": "Pl. Cra. 402a",
         "locus_form": "𝐏𝐥. 𝑪𝒓𝒂. 𝟒𝟎𝟐𝐚",
         "quote_eng": "You cannot step into the same river twice.",
         "quote_orig": "Δὶς ἐς τὸν αὐτὸν ποταμὸν οὐκ ἂν ἐμβαίης.",
-        "used": 1
+        "used": 0
     },
     {
         "attrib_to": "Plautus",
@@ -127,7 +127,7 @@
         "locus_form": "𝐏𝐥𝐚𝐮𝐭. 𝑷𝒆𝒓𝒔𝒂 𝟕𝟐𝟗.",
         "quote_eng": "A word is enough for the wise.",
         "quote_orig": "Dictum sapienti sat est.",
-        "used": 1
+        "used": 0
     },
     {
         "attrib_to": "Shortened Latin paraphrasing of Aristotle",
@@ -156,17 +156,67 @@
         "locus": "Cic. Leg. 3.8",
         "locus_form": "𝐂𝐢𝐜. 𝑳𝒆𝒈. 𝟑.𝟖",
         "quote_eng": "Let the well-being of the people be the highest law.",
-        "quote_orig": "Salus populi suprema lex esto. ",
+        "quote_orig": "Salus populi suprema lex esto.",
         "used": 0
     },
     {
         "attrib_to": "M. Tullius Cicero",
-        "comment": "I.e. the Pythagorians. An interesting oppposition to Arist. Eth. Nic. 1096a.",
+        "comment": "I.e. the Pythagorians. An interesting opposition to Arist. Eth. Nic. 1096a.",
         "id_title": "cicero_to_err",
         "locus": "Cic. Tusc. 1.39",
         "locus_form": "𝐂𝐢𝐜. 𝑻𝒖𝒔𝒄. 𝟏.𝟑𝟗",
         "quote_eng": "By Hercules, I prefer to err with Plato... than to come to truths with those people.",
-        "quote_orig": "Errare mehercule malo cum Platone…  quam cum istis vera sentire.",
+        "quote_orig": "Errare mehercule malo cum Platone… quam cum istis vera sentire.",
+        "used": 0
+    },
+    {
+        "attrib_to": "Attributed to Diogenes the Cynic",
+        "comment": "When Alexander the Great asked Diogenes if he could do anything for him.",
+        "id_title": "diogenes_sun",
+        "locus": "Plut. Alex. 14.3",
+        "locus_form": "𝐏𝐥𝐮𝐭. 𝑨𝒍𝒆𝒙. 𝟏𝟒.𝟑",
+        "quote_eng": "Move a little out of the Sun's way.",
+        "quote_orig": "Μικρὸν ἀπὸ τοῦ ἡλίου μετάστηθι.",
+        "used": 0
+    },
+    {
+        "attrib_to": "Attributed to Alexander the Great",
+        "comment": "Supposedly said after his encounter with the Cynic.",
+        "id_title": "alexander_diog",
+        "locus": "Plut. Alex. 14.3",
+        "locus_form": "𝐏𝐥𝐮𝐭. 𝑨𝒍𝒆𝒙. 𝟏𝟒.𝟑",
+        "quote_eng": "If I were not Alexander, I would be Diogenes.",
+        "quote_orig": "Εἰ μὴ Ἀλέξανδρος ἤμην, Διογένης ἂν ἤμην.",
+        "used": 0
+    },
+    {
+        "attrib_to": "Heraclitus",
+        "comment": "A less paradoxical variation of the more famous river fragment. ",
+        "id_title": "heraclitus_river2",
+        "locus": "DK22B12",
+        "locus_form": "𝐃𝐊𝟐𝟐𝐁𝟏𝟐",
+        "quote_eng": "On those stepping into the same river, different and different waters flow.",
+        "quote_orig": "Ποταμοῖσι τοῖσιν αὐτοῖσιν ἐμϐαίνουσιν, ἕτερα καὶ ἕτερα ὕδατα ἐπιρρεῖ.",
+        "used": 0
+    },
+    {
+        "attrib_to": "Heraclitus",
+        "comment": "Seemingly paradoxical \"unity of opposites\", a hallmark of Heraclitus' philosophy.",
+        "id_title": "heraclitus_learn",
+        "locus": "DK22B60",
+        "locus_form": "𝐃𝐊𝟐𝟐𝐁𝟔𝟎",
+        "quote_eng": "Road up and down is one and the same.",
+        "quote_orig": "Ὁδὸς ἄνω κάτω μία καὶ ὡυτή.",
+        "used": 0
+    },
+    {
+        "attrib_to": "Heraclitus",
+        "comment": "Probably the most obscure aphorism attributed to Heraclitus.",
+        "id_title": "heraclitus_child",
+        "locus": "DK22B52",
+        "locus_form": "𝐃𝐊𝟐𝟐𝐁𝟓𝟐",
+        "quote_eng": "An eon is a child playing, playing draughts. The kingdom is the child's. ",
+        "quote_orig": "Αἰὼν παῖς ἐστι παίζων, πεσσεύων· παιδὸς ἡ βασιληίη.",
         "used": 0
     }
 ]
