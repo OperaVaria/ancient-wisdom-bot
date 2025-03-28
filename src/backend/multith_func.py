@@ -51,7 +51,7 @@ def threaded_login(keys):
 
 
 def threaded_posting(bs_cl, in_cl, mt_api, x_api, x_cl,
-                     text_post, image_post, temp_image_path):
+                     text_post, image_post):
     """
     Runs social media posting functions concurrently 
     with the concurrent.futures module.
@@ -61,18 +61,16 @@ def threaded_posting(bs_cl, in_cl, mt_api, x_api, x_cl,
             social media Client and API objects.
         text_post: textual post string.
         image_post: image post object.
-        temp_image_path: path to the temporarily
-            saved image post file.
     
     Returns:
         bs_res, in_res, mt_res, x_res: request response objects.
     """
     with ThreadPoolExecutor(max_workers = 4) as executor:
         # Submit.
-        bs_future = executor.submit(bs_post, bs_cl, text_post)
-        in_future = executor.submit(in_post, in_cl, image_post, temp_image_path)
+        bs_future = executor.submit(bs_post, bs_cl, image_post, text_post)
+        in_future = executor.submit(in_post, in_cl, image_post)
         mt_future = executor.submit(mt_post, mt_api, text_post)
-        x_future = executor.submit(x_post, x_api, x_cl, text_post, image_post, temp_image_path)
+        x_future = executor.submit(x_post, x_api, x_cl, image_post, text_post)
         # Get Results.
         bs_res = bs_future.result()
         in_res = in_future.result()

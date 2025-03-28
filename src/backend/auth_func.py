@@ -9,17 +9,18 @@ Part of the "Ancient Wisdom Daily" project by OperaVaria.
 # Imports from built-in modules:
 import logging
 from os.path import exists as os_exists
+from requests.exceptions import RequestException
 
 # Imports from external packages:
 from atproto import Client as BsClient
-from atproto_core.exceptions import AtProtocolError
+from atproto_client.exceptions import UnauthorizedError
 from instagrapi import Client as InstaClient
-from instagrapi.exceptions import ClientError, LoginRequired
+from instagrapi.exceptions import ClientUnauthorizedError, LoginRequired
 from threadspy import ThreadsAPI
 from tweepy import API as XAPI
 from tweepy import Client as XClient
 from tweepy import OAuth1UserHandler
-from tweepy.errors import TweepyException
+from tweepy.errors import Unauthorized
 
 # Setup logging:
 logger = logging.getLogger(__name__)
@@ -37,13 +38,13 @@ def bluesky_login(login, password):
         bs_cl: authenticated Bluesky Client object.
 
     Raises:
-        AtProtocolError: if login fails.
+        UnauthorizedError: if login fails.
     """
     bs_cl = BsClient()
     try:
         bs_cl.login(login, password)
         return bs_cl
-    except AtProtocolError as e:
+    except UnauthorizedError as e:
         logger.error("Bluesky login failed: %s", e)
         raise
 
@@ -65,11 +66,11 @@ def insta_login(username, password, settings_path, delay_range):
         in_cl: authenticated Instagram Client object.
 
     Raises:
-        ClientError: if login fails with both methods.
+        ClientUnauthorizedError: if login fails with both methods.
     """
     # Create Client instance.
     in_cl = InstaClient()
-    # Add random delay to mimic live user interactions.
+    # Add random delay.
     in_cl.delay_range = delay_range
     # Try login using saved session.
     if _try_session_login(in_cl, username, password, settings_path):
@@ -78,7 +79,7 @@ def insta_login(username, password, settings_path, delay_range):
     if _try_credentials_login(in_cl, username, password, settings_path):
         return in_cl
     # If both login methods fail, raise error.
-    raise ClientError(
+    raise ClientUnauthorizedError(
         "Login failed: couldn't login user with either password or session"
     )
 
@@ -94,7 +95,7 @@ def _try_session_login(client, username, password, settings_path):
 
     Raises:
         LoginRequired: if session is invalid and verification failed.
-        ClientError: login failed due to other factor.
+        ClientUnauthorizedError: login failed due to other factor.
     """
     # If settings file does not exist: early return False.
     if not os_exists(settings_path):
@@ -116,7 +117,7 @@ def _try_session_login(client, username, password, settings_path):
             client.set_settings({})
             client.set_uuids(old_session["uuids"])
             return False
-    except ClientError as e:
+    except ClientUnauthorizedError as e:
         logger.error("Couldn't login user using session information: %s", e)
         return False
 
@@ -131,7 +132,7 @@ def _try_credentials_login(client, username, password, settings_path):
         Login success boolean.
 
     Raises:
-        ClientError: if login failed.
+        ClientUnauthorizedError: if login failed.
     """
     try:
         if client.login(username, password):
@@ -139,7 +140,7 @@ def _try_credentials_login(client, username, password, settings_path):
             client.dump_settings(settings_path)
             return True
         return False
-    except ClientError as e:
+    except ClientUnauthorizedError as e:
         logger.error("Couldn't login user using username and password: %s", e)
         return False
 
@@ -156,12 +157,12 @@ def threads_login(username, password):
         mt_api: authenticated ThreadsAPI object.
 
     Raises:
-        Exception: if either authentication fails.
+        RequestException: if either authentication fails.
     """
     try:
         mt_api = ThreadsAPI(username, password)
         return mt_api
-    except Exception as e:
+    except RequestException as e:
         logger.error("Threads authentication failed: %s", e)
         raise
 
@@ -178,7 +179,7 @@ def x_auth(x_keys):
         API and Client objects (x_api, x_cl).
 
     Raises:
-        TweepyException: If either authentication fails.
+        Unauthorized: If either authentication fails.
     """
     # X API v1.1 authentication with error handling.
     try:
@@ -189,7 +190,7 @@ def x_auth(x_keys):
             consumer_secret=x_keys["consumer_secret"],
         )
         x_api = XAPI(x_oauth1)
-    except TweepyException as e:
+    except Unauthorized as e:
         logger.error("X API v1.1 authentication failed: %s", e)
         raise
     # X API v2 authentication with error handling.
@@ -202,7 +203,7 @@ def x_auth(x_keys):
             consumer_secret=x_keys["consumer_secret"],
             wait_on_rate_limit=True,
         )
-    except TweepyException as e:
+    except Unauthorized as e:
         logger.error("X API v2 authentication failed: %s", e)
         raise
     return x_api, x_cl

@@ -59,6 +59,7 @@ class ImagePost:
         self.text_color = text_color
         self.reg_font = reg_font
         self.bold_font = bold_font
+        self.path = None
         # Call create_image method.
         self.image = self.create_image(wis_obj)
 
@@ -129,6 +130,7 @@ class ImagePost:
     def save_image(self, path):
         """Save the image to a specified path."""
         self.image.save(path, "JPEG")
+        self.path = path
 
 
 # Print on accidental run:

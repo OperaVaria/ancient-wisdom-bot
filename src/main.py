@@ -71,7 +71,7 @@ def main():
     image_post.save_image(TEMP_POST_IMG)
     # Post concurrently.
     threaded_posting(bs_cl, in_cl, mt_api, x_api, x_cl,
-                     text_post, image_post, TEMP_POST_IMG)
+                     text_post, image_post)
     # Remove temp image.
     if os_exists(TEMP_POST_IMG):
         os_remove(TEMP_POST_IMG)
