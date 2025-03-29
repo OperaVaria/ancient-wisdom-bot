@@ -4,7 +4,7 @@ max-args=10
 max-attributes=10
 max-locals=18
 max-positional-arguments=10
-min-public-methods=1
+min-public-methods=0
 
 
 [MESSAGES CONTROL]
