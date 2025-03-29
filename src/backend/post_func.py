@@ -18,7 +18,7 @@ from tweepy.errors import BadRequest, Forbidden
 
 # Local imports:
 from backend.db_func import db_get
-from backend.classes import ImagePost
+from backend.classes import TextPost, ImagePost
 
 # Setup logging:
 logger = logging.getLogger(__name__)
@@ -30,7 +30,7 @@ def assemble_posts(db_file, image_size, bg_color, text_color,
     Function to assemble posts from Wisdom object data.
 
     Returns:
-        Tuple containing text_post string and image_post object.
+        Tuple containing TextPost and ImagePost object.
 
     Raises:
         RuntimeError: if creation fails.
@@ -41,7 +41,7 @@ def assemble_posts(db_file, image_size, bg_color, text_color,
         # Log selected quote.
         logger.info("Quote selected: %s", wis_obj.id)
         # Call text post create method.
-        text_post = wis_obj.create_text_post()
+        text_post = TextPost(wis_obj)
         # Create ImagePost instance.
         image_post = ImagePost(wis_obj, image_size, bg_color, text_color,
                                reg_font, bold_font)
@@ -59,7 +59,7 @@ def bs_post(bs_cl, image_post, text_post):
     Args:
         bs_cl: authenticated Bluesky client object.
         image_post: ImagePost object.
-        text_post: textual post string.
+        text_post: TextPost object.
     
     Returns:
         bs_res: request response object.
@@ -69,13 +69,14 @@ def bs_post(bs_cl, image_post, text_post):
     """
     try:
         # Attempt to post text.
-        bs_res = bs_cl.send_post(text=text_post)
+        bs_res = bs_cl.send_post(text=text_post.full_text)
         return bs_res
     except BadRequestError:
         try:
             # Fall back to image.
             logger.info("Text posting failed. Falling back to image post")
-            bs_res = bs_cl.send_image(image=image_post.path, image_alt=image_post.caption)
+            bs_res = bs_cl.send_image(text=text_post.comment_text, image=image_post.open_bin(),
+                                      image_alt=text_post.accessibility_text)
             return bs_res
         except BSRequestException as e:
             # Image fail: raise error.
@@ -83,15 +84,14 @@ def bs_post(bs_cl, image_post, text_post):
             raise
 
 
-
-
-def in_post(in_cl, image_post):
+def in_post(in_cl, image_post, text_post):
     """
     Post to Instagram with error handling.
 
     Args:
         in_cl: authenticated Instagram client object.
         image_post: ImagePost object.
+        text_post: TextPost object.
     
     Returns:
         in_res: request response object.
@@ -100,7 +100,11 @@ def in_post(in_cl, image_post):
         ClientBadRequestError: if post request fails.
     """
     try:
-        in_res = in_cl.photo_upload(image_post.path, image_post.caption)
+        in_res = in_cl.photo_upload(
+            path=image_post.path,
+            caption=text_post.comment_text,
+            extra_data={"custom_accessibility_caption": text_post.accessibility_text},
+        )
         return in_res
     except ClientBadRequestError as e:
         logger.error("Posting to Instagram failed: %s", e)
@@ -113,7 +117,7 @@ def mt_post(mt_api, text_post):
 
     Args:
         mt_api: authenticated Threads API object.
-        text_post: textual post string.
+        text_post: TextPost object.
     
     Returns:
         mt_res: request response object.
@@ -122,7 +126,7 @@ def mt_post(mt_api, text_post):
         ReqRequestException: if post request fails.
     """
     try:
-        mt_res = mt_api.publish(caption=text_post)
+        mt_res = mt_api.publish(caption=text_post.full_text)
         return mt_res
     except ReqRequestException as e:
         logger.error("Posting to Threads failed: %s", e)
@@ -135,9 +139,9 @@ def x_post(x_api, x_cl, image_post, text_post):
     as image.
 
     Args:
-        x_api, x_cl: authenticated X client and API objects.
-        text_post: textual post string.
+        x_api, x_cl: authenticated X client and API objects.        
         image_post: ImagePost object.
+        text_post: TextPost object.
 
     Returns:
         x_res: request response object.
@@ -147,14 +151,14 @@ def x_post(x_api, x_cl, image_post, text_post):
     """
     try:
         # Attempt to post text.
-        x_res = x_cl.create_tweet(text=text_post)
+        x_res = x_cl.create_tweet(text=text_post.full_text)
         return x_res
     except Forbidden:
         try:
             # Fall back to image.
             logger.info("Text posting failed. Falling back to image post")
-            media_id = x_api.media_upload(image_post.path).media_id_string
-            x_res = x_cl.create_tweet(text=image_post.caption, media_ids=[media_id])
+            media = x_api.media_upload(filename=image_post.path, media_category="tweet_image")
+            x_res = x_cl.create_tweet(text=text_post.comment_text, media_ids=[media.media_id])
             return x_res
         except BadRequest as e:
             # Image fail: raise error.

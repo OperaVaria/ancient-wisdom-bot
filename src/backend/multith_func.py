@@ -59,8 +59,8 @@ def threaded_posting(bs_cl, in_cl, mt_api, x_api, x_cl,
     Args:
         bs_cl, in_cl, mt_api, x_api, x_cl: authenticated
             social media Client and API objects.
-        text_post: textual post string.
-        image_post: image post object.
+        text_post: TextPost object.
+        image_post: ImagePost object.
     
     Returns:
         bs_res, in_res, mt_res, x_res: request response objects.
@@ -68,7 +68,7 @@ def threaded_posting(bs_cl, in_cl, mt_api, x_api, x_cl,
     with ThreadPoolExecutor(max_workers = 4) as executor:
         # Submit.
         bs_future = executor.submit(bs_post, bs_cl, image_post, text_post)
-        in_future = executor.submit(in_post, in_cl, image_post)
+        in_future = executor.submit(in_post, in_cl, image_post, text_post)
         mt_future = executor.submit(mt_post, mt_api, text_post)
         x_future = executor.submit(x_post, x_api, x_cl, image_post, text_post)
         # Get Results.
