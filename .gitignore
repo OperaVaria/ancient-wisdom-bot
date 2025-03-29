@@ -3,5 +3,4 @@
 .temp/
 .venv/
 .vscode/
-src/auth/keys.yaml
 .gitignore
