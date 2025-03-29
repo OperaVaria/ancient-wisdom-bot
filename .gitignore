@@ -4,3 +4,5 @@
 .venv/
 .vscode/
 .gitignore
+src/config/keys.yaml
+src/config/session.json
