@@ -3,6 +3,7 @@
 .temp/
 .venv/
 .vscode/
+temp/
 .gitignore
 src/config/keys.yaml
 src/config/session.json
