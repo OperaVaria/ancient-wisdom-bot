@@ -9,6 +9,7 @@ Part of the "Ancient Wisdom Daily" project by OperaVaria.
 # Built-in imports:
 import logging
 import textwrap
+from dataclasses import dataclass
 
 # Imports from external packages:
 from PIL import Image, ImageDraw, ImageFont
@@ -16,49 +17,56 @@ from PIL import Image, ImageDraw, ImageFont
 # Setup logging.
 logger = logging.getLogger(__name__)
 
-
+@dataclass(frozen=True)
 class Wisdom:
-    """Quote data in Python object form."""
+    """
+    Quote data in Python dataclass object form.
+    Filled up by tuple with information retrieved from database.
+    """
+    id: str
+    original: str
+    translation: str
+    attribution: str
+    locus: str
+    locus_formatted: str
+    comment: str
+    used: bool
 
-    def __init__(self, id_title, quote_orig, quote_eng,
-                 attrib_to, locus, locus_form, comment, used):
-        """Create Wisdom object instance with attributes fetched from the database."""
-        self.id = id_title
-        self.original = quote_orig
-        self.translation = quote_eng
-        self.attribution = attrib_to
-        self.locus = locus
-        self.locus_formatted = locus_form
-        self.comment = comment
-        self.used = bool(used)  # Convert SQLite number to actual Boolean.
 
-    def create_text_post(self):
+class TextPost:
+    """Social media textual post factory in Python object form."""
+
+    def __init__(self, wisdom_obj):
         """
-        Assemble a text post from wisdom object data.
-
-        Returns:
-            text_post string.
+        Assemble text post strings needed for social media posting
+        from Wisdom object data.
         """
-        text_post = (
-            f'"{self.original}"\n"{self.translation}"\n'
-            f"/ {self.attribution} in {self.locus_formatted} /\n\n{self.comment}"
+        self.full_text = (
+            f'"{wisdom_obj.original}"\n"{wisdom_obj.translation}"\n'
+            f"/ {wisdom_obj.attribution} in {wisdom_obj.locus_formatted} /"
+            f"\n\n{wisdom_obj.comment}"
         )
-        return text_post
+        self.accessibility_text = (
+            f'Original quote: "{wisdom_obj.original}"\n'
+            f'Translation: "{wisdom_obj.translation}"\n'
+            f'Source: "{wisdom_obj.attribution} in {wisdom_obj.locus_formatted}"'
+        )
+        self.comment_text = wisdom_obj.comment
 
 
 class ImagePost:
-    """Instagram image post data in Python object form."""
+    """Social media image post data and factory in Python object form."""
 
     def __init__(self, wis_obj, image_size, bg_color, text_color,
                  reg_font, bold_font):
         """Create ImagePost instance from Wisdom object data
         and image attributes."""
-        self.caption = wis_obj.comment
         self.size = image_size
         self.bg_color = bg_color
         self.text_color = text_color
         self.reg_font = reg_font
         self.bold_font = bold_font
+        self.path = None
         # Call create_image method.
         self.image = self.create_image(wis_obj)
 
@@ -129,6 +137,24 @@ class ImagePost:
     def save_image(self, path):
         """Save the image to a specified path."""
         self.image.save(path, "JPEG")
+        self.path = path
+
+    def open_bin(self):
+        """
+        Open saved image as binary
+
+        Returns:
+            Binary image data.
+        
+        Raises:
+            TypeError: Image has not been saved yet (=None).
+        """
+        if self.path is None:
+            raise TypeError("self.path is None, image path unknown")
+
+        with open(self.path, "rb") as file:
+            bin_data = file.read()
+            return bin_data
 
 
 # Print on accidental run:
