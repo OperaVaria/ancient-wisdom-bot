@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Accessibility text for image posts when available.
+
+### Changed
+
+- Revamped classes.
+_ Further improved error handling.
+
+### Fixed
+
+- Bluesky and X image posting bug.
 - Database typo fixes.
 
 ## [2.0.0] - 2025.03.07
