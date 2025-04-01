@@ -11,7 +11,7 @@ import logging
 from concurrent.futures import ThreadPoolExecutor
 
 # Imports from local modules:
-from backend.auth_func import bluesky_login, insta_login, threads_login, x_auth
+from backend.auth_func import bluesky_login, insta_login, mastodon_login, x_auth
 from backend.post_func import bs_post, in_post, mt_post, x_post
 from config.path_constants import INSTA_SESSION
 from config.settings import INSTA_DELAY_RANGE
@@ -37,10 +37,11 @@ def threaded_login(keys):
         # Submit.
         bs_future = executor.submit(bluesky_login, keys["bluesky"]["handle"],
                                     keys["bluesky"]["password"])
-        in_future = executor.submit(insta_login, keys["meta"]["username"], keys["meta"]["password"],
-                        INSTA_SESSION, INSTA_DELAY_RANGE)
-        mt_future = executor.submit(threads_login, keys["meta"]["username"],
-                                    keys["meta"]["password"])
+        in_future = executor.submit(insta_login, keys["instagram"]["username"],
+                                    keys["instagram"]["password"],
+                                    INSTA_SESSION, INSTA_DELAY_RANGE)
+        mt_future = executor.submit(mastodon_login, keys["mastodon"]["access_token"],
+                                    keys["mastodon"]["api_base_uri"])
         x_future = executor.submit(x_auth, keys["x"])
         # Get Results.
         bs_cl = bs_future.result()

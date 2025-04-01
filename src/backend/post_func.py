@@ -8,12 +8,12 @@ Part of the "Ancient Wisdom Daily" project by OperaVaria.
 
 # Imports from built-in modules:
 import logging
-from requests.exceptions import RequestException as ReqRequestException
 
 # Imports from external packages:
 from atproto_client.exceptions import BadRequestError
-from atproto_client.exceptions import RequestException as BSRequestException
+from atproto_client.exceptions import RequestException
 from instagrapi.exceptions import ClientBadRequestError
+from mastodon.errors import MastodonError
 from tweepy.errors import BadRequest, Forbidden
 
 # Local imports:
@@ -78,7 +78,7 @@ def bs_post(bs_cl, image_post, text_post):
             bs_res = bs_cl.send_image(text=text_post.comment_text, image=image_post.open_bin(),
                                       image_alt=text_post.accessibility_text)
             return bs_res
-        except BSRequestException as e:
+        except RequestException as e:
             # Image fail: raise error.
             logger.error("Image posting to Bluesky failed: %s", e)
             raise
@@ -113,23 +113,24 @@ def in_post(in_cl, image_post, text_post):
 
 def mt_post(mt_api, text_post):
     """
-    Post to Meta Threads with error handling.
+    Post to Mastodon with error handling.
 
     Args:
-        mt_api: authenticated Threads API object.
+        mt_api: authenticated Mastodon API object.
         text_post: TextPost object.
     
     Returns:
         mt_res: request response object.
     
     Raises:
-        ReqRequestException: if post request fails.
+        MastodonError: if post request fails.
     """
     try:
-        mt_res = mt_api.publish(caption=text_post.full_text)
+        mt_res = mt_api.status_post(status=text_post.full_text,
+                                  visibility="public")
         return mt_res
-    except ReqRequestException as e:
-        logger.error("Posting to Threads failed: %s", e)
+    except MastodonError as e:
+        logger.error("Posting to Mastodon failed: %s", e)
         raise
 
 

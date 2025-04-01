@@ -9,14 +9,14 @@ Part of the "Ancient Wisdom Daily" project by OperaVaria.
 # Imports from built-in modules:
 import logging
 from os.path import exists as os_exists
-from requests.exceptions import RequestException
 
 # Imports from external packages:
 from atproto import Client as BsClient
 from atproto_client.exceptions import UnauthorizedError
 from instagrapi import Client as InstaClient
 from instagrapi.exceptions import ClientUnauthorizedError, LoginRequired
-from threadspy import ThreadsAPI
+from mastodon import Mastodon
+from mastodon.errors import MastodonUnauthorizedError
 from tweepy import API as XAPI
 from tweepy import Client as XClient
 from tweepy import OAuth1UserHandler
@@ -145,25 +145,25 @@ def _try_credentials_login(client, username, password, settings_path):
         return False
 
 
-def threads_login(username, password):
+def mastodon_login(access_token, api_base_uri):
     """
-    Set up Threads login with error handling.
+    Set up Mastodon login with error handling.
 
     Args:
-        username: Threads username.
-        password: Threads password.
+        access_token: Mastodon application access token.
+        api_base_uri: Mastodon application redirect URI.
 
     Returns:
-        mt_api: authenticated ThreadsAPI object.
+        mt_api: authenticated Mastodon API object.
 
     Raises:
-        RequestException: if either authentication fails.
+        MastodonUnauthorizedError: if authentication fails.
     """
     try:
-        mt_api = ThreadsAPI(username, password)
+        mt_api = Mastodon(access_token=access_token, api_base_url=api_base_uri)
         return mt_api
-    except RequestException as e:
-        logger.error("Threads authentication failed: %s", e)
+    except MastodonUnauthorizedError as e:
+        logger.error("Mastodon authentication failed: %s", e)
         raise
 
 
