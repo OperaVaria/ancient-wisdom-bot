@@ -7,7 +7,6 @@ and a short comment.
 
 TODO: 1. Manual testing.
       2. Steadily add to database.
-      3. Posting to other Meta platforms.
 """
 
 # Imports from built-in modules:
