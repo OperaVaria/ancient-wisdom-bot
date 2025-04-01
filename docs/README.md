@@ -10,14 +10,14 @@ New items are added to the database continuously.
 
 Currently posting to: [Bluesky](https://bsky.app/profile/ancwisday.bsky.social),
 [Instagram](https://www.instagram.com/anc_wis_day/),
-[Threads](https://www.threads.net/@anc_wis_day/),
+[Mastodon](https://mastodon.social/@AncWisDay),
 [X](https://x.com/AncWisDay).
 
 API wrappers used:
 
 - [Atproto for Bluesky](https://github.com/MarshalX/atproto)
 - [Instagrapi for Instagram](https://github.com/subzeroid/instagrapi)
-- [Threads-py for Threads](https://github.com/junhoyeo/threads-py)
+- [Mastodon.py for Mastodon](https://github.com/halcy/Mastodon.py)
 - [Tweepy for X](https://github.com/tweepy/tweepy)
 
 Image post font: [Gentium Plus designed by SIL International](https://fonts.google.com/specimen/Gentium+Plus).

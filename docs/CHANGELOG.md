@@ -9,17 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Mastodon functionality.
 - Accessibility text for image posts when available.
 
 ### Changed
 
 - Revamped classes.
-_ Further improved error handling.
+- Code readability improvements (function names, commenting).
+- Further improved error handling.
 
 ### Fixed
 
 - Bluesky and X image posting bug.
 - Database typo fixes.
+
+### Removed
+
+- Meta Threads functionality.
 
 ## [2.0.0] - 2025.03.07
 
