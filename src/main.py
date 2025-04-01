@@ -28,8 +28,8 @@ from config.settings import IMG_SIZE, IMG_BG_COLOR, IMG_TEXT_COLOR
 # Metadata variables:
 __author__ = "OperaVaria"
 __contact__ = "lcs_it@proton.me"
-__version__ = "2.0.0"
-__date__ = "2025.03.07"
+__version__ = "2.1.0"
+__date__ = "2025.04.03"
 
 # Licence:
 __license__ = "GPLv3"
