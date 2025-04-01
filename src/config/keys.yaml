@@ -4,9 +4,15 @@ bluesky:
   handle: Fake
   password: Fake
 
-meta:
+instagram:
   username: Fake
   password: Fake
+
+mastodon:
+  access_token: Fake
+  api_base_uri: Fake
+  client_key: Fake
+  client_secret: Fake
 
 x:
   access_token_secret: Fake
