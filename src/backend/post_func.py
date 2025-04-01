@@ -65,7 +65,7 @@ def bs_post(bs_cl, image_post, text_post):
         bs_res: request response object.
     
     Raises:
-        BSRequestException: if post request fails.
+        RequestException: if post request fails.
     """
     try:
         # Attempt to post text.
@@ -74,7 +74,7 @@ def bs_post(bs_cl, image_post, text_post):
     except BadRequestError:
         try:
             # Fall back to image.
-            logger.info("Text posting failed. Falling back to image post")
+            logger.info("Text posting to Bluesky failed. Falling back to image post")
             bs_res = bs_cl.send_image(text=text_post.comment_text, image=image_post.open_bin(),
                                       image_alt=text_post.accessibility_text)
             return bs_res
@@ -157,7 +157,7 @@ def x_post(x_api, x_cl, image_post, text_post):
     except Forbidden:
         try:
             # Fall back to image.
-            logger.info("Text posting failed. Falling back to image post")
+            logger.info("Text posting to X failed. Falling back to image post")
             media = x_api.media_upload(filename=image_post.path, media_category="tweet_image")
             x_res = x_cl.create_tweet(text=text_post.comment_text, media_ids=[media.media_id])
             return x_res
