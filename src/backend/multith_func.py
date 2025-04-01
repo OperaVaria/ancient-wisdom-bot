@@ -12,7 +12,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 # Imports from local modules:
 from backend.auth_func import bluesky_login, insta_login, mastodon_login, x_auth
-from backend.post_func import bs_post, in_post, mt_post, x_post
+from backend.post_func import bluesky_post, insta_post, mastodon_post, x_post
 from config.path_constants import INSTA_SESSION
 from config.settings import INSTA_DELAY_RANGE
 
@@ -68,9 +68,9 @@ def threaded_posting(bs_cl, in_cl, mt_api, x_api, x_cl,
     """
     with ThreadPoolExecutor(max_workers = 4) as executor:
         # Submit.
-        bs_future = executor.submit(bs_post, bs_cl, image_post, text_post)
-        in_future = executor.submit(in_post, in_cl, image_post, text_post)
-        mt_future = executor.submit(mt_post, mt_api, text_post)
+        bs_future = executor.submit(bluesky_post, bs_cl, image_post, text_post)
+        in_future = executor.submit(insta_post, in_cl, image_post, text_post)
+        mt_future = executor.submit(mastodon_post, mt_api, text_post)
         x_future = executor.submit(x_post, x_api, x_cl, image_post, text_post)
         # Get Results.
         bs_res = bs_future.result()

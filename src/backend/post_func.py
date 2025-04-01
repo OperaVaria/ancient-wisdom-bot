@@ -51,7 +51,7 @@ def assemble_posts(db_file, image_size, bg_color, text_color,
         raise
 
 
-def bs_post(bs_cl, image_post, text_post):
+def bluesky_post(bs_cl, image_post, text_post):
     """
     Post to Bluesky, if rejected (due to character length), try posting
     as image.
@@ -84,7 +84,7 @@ def bs_post(bs_cl, image_post, text_post):
             raise
 
 
-def in_post(in_cl, image_post, text_post):
+def insta_post(in_cl, image_post, text_post):
     """
     Post to Instagram with error handling.
 
@@ -111,7 +111,7 @@ def in_post(in_cl, image_post, text_post):
         raise
 
 
-def mt_post(mt_api, text_post):
+def mastodon_post(mt_api, text_post):
     """
     Post to Mastodon with error handling.
 
