@@ -13,7 +13,7 @@ import logging
 from atproto_client.exceptions import BadRequestError
 from atproto_client.exceptions import RequestException
 from instagrapi.exceptions import ClientBadRequestError
-from mastodon.errors import MastodonError
+from mastodon.errors import MastodonAPIError
 from tweepy.errors import BadRequest, Forbidden
 
 # Local imports:
@@ -111,27 +111,39 @@ def insta_post(in_cl, image_post, text_post):
         raise
 
 
-def mastodon_post(mt_api, text_post):
+def mastodon_post(mt_api, image_post, text_post):
     """
-    Post to Mastodon with error handling.
+    Post text to Mastodon, if rejected (due to character length), try posting
+    as image.
 
     Args:
         mt_api: authenticated Mastodon API object.
+        image_post: ImagePost object.
         text_post: TextPost object.
     
     Returns:
         mt_res: request response object.
     
     Raises:
-        MastodonError: if post request fails.
+        MastodonAPIError: if image post fallback fails.
     """
-    try:
+    try: # Attempt to post text.
         mt_res = mt_api.status_post(status=text_post.full_text,
                                   visibility="public")
         return mt_res
-    except MastodonError as e:
-        logger.error("Posting to Mastodon failed: %s", e)
-        raise
+    except MastodonAPIError:
+        try: # Fall back to image.
+            logger.info("Text posting to X failed. Falling back to image post")
+            media = mt_api.media_post(media_file=image_post.path,
+                                    description=text_post.accessibility_text)
+            mt_res = mt_api.status_post(status=text_post.full_text,
+                                        media_ids=[media["id"]],
+                                        visibility="public")
+            return mt_res
+        except MastodonAPIError as e:
+            # Image fail: raise error.
+            logger.error("Image posting to Mastodon failed: %s", e)
+            raise
 
 
 def x_post(x_api, x_cl, image_post, text_post):

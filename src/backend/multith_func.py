@@ -70,7 +70,7 @@ def threaded_posting(bs_cl, in_cl, mt_api, x_api, x_cl,
         # Submit.
         bs_future = executor.submit(bluesky_post, bs_cl, image_post, text_post)
         in_future = executor.submit(insta_post, in_cl, image_post, text_post)
-        mt_future = executor.submit(mastodon_post, mt_api, text_post)
+        mt_future = executor.submit(mastodon_post, mt_api, image_post, text_post)
         x_future = executor.submit(x_post, x_api, x_cl, image_post, text_post)
         # Get Results.
         bs_res = bs_future.result()
