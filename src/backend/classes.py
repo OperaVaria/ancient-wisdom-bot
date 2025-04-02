@@ -120,19 +120,32 @@ class ImagePost:
         """
         Helper method for create_image.
         Load and return fonts for image rendering.
+        Load ImageFont default with error message if custom font unavailable.
 
         Returns:
             Large regular, large bold, small bold font objects.
         """
+        # Declare font variables.
+        font_large_reg = None
+        font_large_bold = None
+        font_small_bold = None
         try:
+            # Try loading the custom fonts.
             font_large_reg = ImageFont.truetype(self.reg_font, 40)
             font_large_bold = ImageFont.truetype(self.bold_font, 40)
             font_small_bold = ImageFont.truetype(self.bold_font, 30)
-            return font_large_reg, font_large_bold, font_small_bold
-        except (FileNotFoundError, OSError) as e:
-            # Fallback to default font if custom fonts aren't available
-            logger.error("Font loading error: %s Using default font", e)
-            return (ImageFont.load_default(),) * 3
+        except FileNotFoundError:
+            logger.error("Font file not found. Using default font")
+            font_large_reg = ImageFont.load_default()
+            font_large_bold = ImageFont.load_default()
+            font_small_bold = ImageFont.load_default()
+        except OSError as e:
+            logger.error("Font loading error: %s. Using default font", e)
+            font_large_reg = ImageFont.load_default()
+            font_large_bold = ImageFont.load_default()
+            font_small_bold = ImageFont.load_default()
+
+        return font_large_reg, font_large_bold, font_small_bold
 
     def save_image(self, path):
         """Save the image to a specified path."""
