@@ -82,6 +82,7 @@ def main():
         except OSError as e:
             logger.error("Failed to remove temporary image: %s", e)
     logger.info("Process completed")
+    return 0
 
 
 # Launch main function.
