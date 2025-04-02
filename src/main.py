@@ -58,9 +58,13 @@ def main():
     logging.basicConfig(
     format="%(asctime)s : %(levelname)s : %(message)s.", level=logging.INFO
     )
-    # Load authentication file.
-    with open(LOGIN_KEYS, "r", encoding="utf-8") as keys_file:
-        keys = safe_load(keys_file)
+    # Load authentication file with error handling.
+    try:
+        with open(LOGIN_KEYS, "r", encoding="utf-8") as keys_file:
+            keys = safe_load(keys_file)
+    except (FileNotFoundError, PermissionError) as e:
+        logger.critical("Failed to load authentication keys: %s", e)
+        return 1
     # Authenticate APIs concurrently.
     bs_cl, in_cl, mt_api, x_api, x_cl = threaded_login(keys)
     # Assemble posts.
@@ -71,9 +75,12 @@ def main():
     # Post concurrently.
     threaded_posting(bs_cl, in_cl, mt_api, x_api, x_cl,
                      text_post, image_post)
-    # Remove temp image.
+    # Remove temp image with error handling,
     if os_exists(TEMP_POST_IMG):
-        os_remove(TEMP_POST_IMG)
+        try:
+            os_remove(TEMP_POST_IMG)
+        except OSError as e:
+            logger.error("Failed to remove temporary image: %s", e)
     logger.info("Process completed")
 
 
