@@ -9,13 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Continuos database upgrade.
+
+## [2.1.0] - 2025.04.04
+
+### Added
+
 - Mastodon functionality.
 - Accessibility text for image posts when available.
 
 ### Changed
 
 - Revamped classes.
-- Code readability improvements (function names, commenting).
+- Revamped unit testing.
+- Code readability improvements (structure, function names, commenting).
 - Further improved error handling.
 
 ### Fixed
@@ -44,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial "release".
 
-[Unreleased]: https://github.com/OperaVaria/ancient-wisdom-bot/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/OperaVaria/ancient-wisdom-bot/compare/2.1.0...HEAD
+[2.1.0]: https://github.com/OperaVaria/ancient-wisdom-bot/compare/1.0.0...2.1.0
 [2.0.0]: https://github.com/OperaVaria/ancient-wisdom-bot/compare/1.0.0...2.0.0
 [1.0.0]: https://github.com/OperaVaria/ancient-wisdom-bot/releases/tag/1.0.0
