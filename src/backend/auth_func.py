@@ -58,9 +58,10 @@ def insta_login(username, password, settings_path, delay_range):
         username: Instagram username.
         password: Instagram password.
         settings_path: Path to session settings.
-        delay_range: list[int] range between two numbers,
-                     random delay in seconds between
-                     requests to mimic live user interaction.
+        delay_range(list[int]):
+            interpreted as a range between two numbers.
+            A random delay in seconds between
+            requests to mimic live user interaction.
 
     Returns:
         in_cl: authenticated Instagram Client object.
@@ -92,10 +93,6 @@ def _try_session_login(client, username, password, settings_path):
 
     Returns:
         Login success boolean.
-
-    Raises:
-        LoginRequired: if session is invalid and verification failed.
-        ClientUnauthorizedError: login failed due to other factor.
     """
     # If settings file does not exist: early return False.
     if not os_exists(settings_path):
@@ -105,11 +102,10 @@ def _try_session_login(client, username, password, settings_path):
         session = client.load_settings(settings_path)
         client.set_settings(session)
         client.login(username, password)
-        # Verify if session is valid.
+        # Verify if session is valid. If not, log error, return false.
         try:
             client.get_timeline_feed()
             return True
-        # If not, raise exception.
         except LoginRequired:
             logger.error("Session is invalid, need to login via username and password")
             # Preserve device UUIDs across logins.
@@ -130,9 +126,6 @@ def _try_credentials_login(client, username, password, settings_path):
 
     Returns:
         Login success boolean.
-
-    Raises:
-        ClientUnauthorizedError: if login failed.
     """
     try:
         if client.login(username, password):
@@ -175,8 +168,8 @@ def x_auth(x_keys):
         x_keys: dictionary containing all required keys and tokens.
 
     Returns:
-        Tuple containing authenticated
-        API and Client objects (x_api, x_cl).
+        x_api: authenticated v1.1 X API object.
+        x_cl: authenticated v2 X Client object.
 
     Raises:
         Unauthorized: If either authentication fails.

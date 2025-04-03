@@ -26,7 +26,7 @@ def threaded_login(keys):
     with the concurrent.futures module.
     
     Args:
-        keys: login information dictionary.
+        keys: nested login information dict.
 
     Returns:
         bs_cl, in_cl, mt_api, x_api, x_cl: authenticated
@@ -66,6 +66,7 @@ def threaded_posting(bs_cl, in_cl, mt_api, x_api, x_cl,
     Returns:
         bs_res, in_res, mt_res, x_res: request response objects.
     """
+    # Executor context manager.
     with ThreadPoolExecutor(max_workers = 4) as executor:
         # Submit.
         bs_future = executor.submit(bluesky_post, bs_cl, image_post, text_post)

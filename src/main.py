@@ -29,7 +29,7 @@ from config.settings import IMG_SIZE, IMG_BG_COLOR, IMG_TEXT_COLOR
 __author__ = "OperaVaria"
 __contact__ = "lcs_it@proton.me"
 __version__ = "2.1.0"
-__date__ = "2025.04.03"
+__date__ = "2025.04.04"
 
 # Licence:
 __license__ = "GPLv3"
@@ -53,7 +53,12 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-    """Main function."""
+    """
+    Main function.
+    
+    Returns:
+        Exit code.
+    """
     # Configure logging.
     logging.basicConfig(
     format="%(asctime)s : %(levelname)s : %(message)s.", level=logging.INFO

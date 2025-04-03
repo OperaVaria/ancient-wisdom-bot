@@ -20,8 +20,8 @@ logger = logging.getLogger(__name__)
 @dataclass(frozen=True)
 class Wisdom:
     """
-    Quote data in Python dataclass object form.
-    Filled up by tuple with information retrieved from database.
+    Quote data in Python dataclass form.
+    Filled up with information retrieved from the database.
     """
     id: str
     original: str
@@ -67,18 +67,17 @@ class ImagePost:
         self.reg_font = reg_font
         self.bold_font = bold_font
         self.path = None
-        # Call create_image method.
         self.image = self.create_image(wis_obj)
 
     def create_image(self, wis_obj):
         """
-        Create and return an image with the wisdom text.
+        Create and return an image with the quote text.
 
         Args:
-            wis_obj: Wisdom class instance.
+            wis_obj: Wisdom dataclass instance.
 
         Returns:
-            Image object.
+            quote_image: PIL Image object.
         """
         # Create background image.
         quote_image = Image.new("RGB", self.size, self.bg_color)
@@ -118,12 +117,12 @@ class ImagePost:
 
     def _load_fonts(self):
         """
-        Helper method for create_image.
-        Load and return fonts for image rendering.
-        Load ImageFont default with error message if custom font unavailable.
+        Helper method for create_image. Load and return fonts for image rendering,
+        load ImageFont default with error message if custom font unavailable.
 
         Returns:
-            Large regular, large bold, small bold font objects.
+            font_large_reg, font_large_bold, font_small_bold:
+                FreeTypeFont or ImageFont objects.
         """
         # Declare font variables.
         font_large_reg = None
@@ -144,30 +143,41 @@ class ImagePost:
             font_large_reg = ImageFont.load_default()
             font_large_bold = ImageFont.load_default()
             font_small_bold = ImageFont.load_default()
-
         return font_large_reg, font_large_bold, font_small_bold
 
     def save_image(self, path):
-        """Save the image to a specified path."""
+        """
+        Save image to a specified path as a .jpg file,
+        assign location to self.path.
+        
+        Args:
+            path: Path with desired location and file name.
+        """
         self.image.save(path, "JPEG")
         self.path = path
 
     def open_bin(self):
         """
-        Open saved image as binary
+        Open saved image as binary data with error handling.
 
         Returns:
-            Binary image data.
+            bin_data(bytes): binary image data.
         
         Raises:
-            TypeError: Image has not been saved yet (=None).
+            TypeError: if Image data has not been saved yet
+                       (i.e. self.path = None).
+            FileNotFoundError, PermissionError:
+                if image file loading fails.
         """
         if self.path is None:
-            raise TypeError("self.path is None, image path unknown")
-
-        with open(self.path, "rb") as file:
-            bin_data = file.read()
-            return bin_data
+            raise TypeError("Image data has not yet been saved")
+        try:
+            with open(self.path, "rb") as file:
+                bin_data = file.read()
+                return bin_data
+        except (FileNotFoundError, PermissionError) as e:
+            logger.error("Failed to load quote image file: %s", e)
+            raise
 
 
 # Print on accidental run:

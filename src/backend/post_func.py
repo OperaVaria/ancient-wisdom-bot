@@ -29,8 +29,15 @@ def assemble_posts(db_file, image_size, bg_color, text_color,
     """
     Function to assemble posts from Wisdom object data.
 
+    Args:
+        db_file: Path to database file.
+        image_size: image resolution in format tuple(x, y).
+        bg_color, text_color: color information in format tuple(r, g, b)
+        reg_font, bold_font: Path to font files.
+
     Returns:
-        Tuple containing TextPost and ImagePost object.
+        image_post: ImagePost object.
+        text_post: TextPost object.
 
     Raises:
         RuntimeError: if creation fails.
@@ -40,10 +47,10 @@ def assemble_posts(db_file, image_size, bg_color, text_color,
         wis_obj = db_get(db_file)
         # Log selected quote.
         logger.info("Quote selected: %s", wis_obj.id)
-        # Call text post create method.
+        # Create instances.
         text_post = TextPost(wis_obj)
-        # Create ImagePost instance.
-        image_post = ImagePost(wis_obj, image_size, bg_color, text_color,
+        image_post = ImagePost(wis_obj, image_size,
+                               bg_color, text_color,
                                reg_font, bold_font)
         return text_post, image_post
     except RuntimeError as e:
@@ -75,7 +82,8 @@ def bluesky_post(bs_cl, image_post, text_post):
         try:
             # Fall back to image.
             logger.info("Text posting to Bluesky failed. Falling back to image post")
-            bs_res = bs_cl.send_image(text=text_post.comment_text, image=image_post.open_bin(),
+            bs_res = bs_cl.send_image(text=text_post.comment_text,
+                                      image=image_post.open_bin(),
                                       image_alt=text_post.accessibility_text)
             return bs_res
         except RequestException as e:
@@ -127,12 +135,14 @@ def mastodon_post(mt_api, image_post, text_post):
     Raises:
         MastodonAPIError: if image post fallback fails.
     """
-    try: # Attempt to post text.
+    try:
+        # Attempt to post text.
         mt_res = mt_api.status_post(status=text_post.full_text,
                                   visibility="public")
         return mt_res
     except MastodonAPIError:
-        try: # Fall back to image.
+        try:
+            # Fall back to image.
             logger.info("Text posting to X failed. Falling back to image post")
             media = mt_api.media_post(media_file=image_post.path,
                                     description=text_post.accessibility_text)
@@ -152,7 +162,7 @@ def x_post(x_api, x_cl, image_post, text_post):
     as image.
 
     Args:
-        x_api, x_cl: authenticated X client and API objects.        
+        x_api, x_cl: authenticated X Client and API objects.        
         image_post: ImagePost object.
         text_post: TextPost object.
 
@@ -170,8 +180,10 @@ def x_post(x_api, x_cl, image_post, text_post):
         try:
             # Fall back to image.
             logger.info("Text posting to X failed. Falling back to image post")
-            media = x_api.media_upload(filename=image_post.path, media_category="tweet_image")
-            x_res = x_cl.create_tweet(text=text_post.comment_text, media_ids=[media.media_id])
+            media = x_api.media_upload(filename=image_post.path,
+                                       media_category="tweet_image")
+            x_res = x_cl.create_tweet(text=text_post.comment_text,
+                                      media_ids=[media.media_id])
             return x_res
         except BadRequest as e:
             # Image fail: raise error.

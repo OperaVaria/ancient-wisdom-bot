@@ -30,4 +30,4 @@ TEMP_POST_IMG = TEMP_DIR.joinpath("post.jpg")
 
 # Print on accidental run:
 if __name__ == "__main__":
-    print("Importable module. Not meant to be run!")
+    print("Config file. Not meant to be run!")

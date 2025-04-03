@@ -10,7 +10,7 @@ Part of the "Ancient Wisdom Daily" project by OperaVaria.
 import logging
 import sqlite3
 
-# Import Wisdom class.
+# Import Wisdom dataclass.
 from backend.classes import Wisdom
 
 # Setup logging.
@@ -25,7 +25,7 @@ def db_get(db_file):
         db_file: Path to database file.
 
     Returns:
-        Wisdom: an instance of the Wisdom class with data from the database.
+        wis_obj: instance of the Wisdom dataclass populated from the database.
 
     Raises:
         sqlite3.Error: if there is a database-related error.
@@ -36,17 +36,15 @@ def db_get(db_file):
         cur = con.cursor()
         # Call select random function.
         wis_tuple = select_random(cur)
-        # If result is None ( = no more unused quotes left).
+        # If result is None ( = no more unused quotes left):
+        # call reset database function, fetch random again.
         if wis_tuple is None:
-            # Call database reset function.
             db_reset(con, cur)
-            # Fetch random again.
             wis_tuple = select_random(cur)
         # Create Wisdom object.
         wis_obj = Wisdom(*wis_tuple)
         # Change "used" value to True(1).
         id_tuple = (wis_obj.id,)
-        # Execute, commit.
         cur.execute("UPDATE wisdoms SET used = 1 WHERE id_title = ?", id_tuple)
         con.commit()
         # Call log_remaining function.
@@ -69,9 +67,7 @@ def select_random(cur):
     Returns:
         wis_tuple/None: a tuple with the row data or None if no rows found.
     """
-    # SQLite "SELECT RANDOM()" command.
     com_random = "SELECT * FROM wisdoms WHERE used = 0 ORDER BY RANDOM()"
-    # Fetch row.
     res = cur.execute(com_random)
     wis_tuple = res.fetchone()
     return wis_tuple
@@ -85,10 +81,8 @@ def db_reset(con, cur):
         con: SQLite connection object.
         cur: SQLite cursor object.
     """
-    # Reset "used" values.
     cur.execute("UPDATE wisdoms SET used = 0 WHERE used = 1")
     con.commit()
-    # Log notification.
     logger.info("No more items, database reset")
 
 
@@ -100,7 +94,7 @@ def log_remaining(cur):
         cur: SQLite cursor object.
 
     Returns:
-        int: Number of remaining unused quotes.
+        rem_quotes(int): number of remaining unused quotes.
     """
     cur.execute("SELECT COUNT(*) FROM wisdoms WHERE used = 0")
     rem_quotes = cur.fetchone()[0]
