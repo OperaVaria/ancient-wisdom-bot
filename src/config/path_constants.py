@@ -25,6 +25,7 @@ GENTIUM_BOLD_TTF = FONT_DIR.joinpath("Gentium_Plus/GentiumPlus-Bold.ttf")
 DB_FILE = DB_DIR.joinpath("wisdoms.db")
 INSTA_SESSION = CONFIG_DIR.joinpath("session.json")
 LOGIN_KEYS = CONFIG_DIR.joinpath("keys.yaml")
+TEMP_DB_COPY = TEMP_DIR.joinpath("copy.db")
 TEMP_POST_IMG = TEMP_DIR.joinpath("post.jpg")
 
 
