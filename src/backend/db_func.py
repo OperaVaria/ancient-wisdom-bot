@@ -54,6 +54,7 @@ def db_get(db_file):
         return wis_obj
     except sqlite3.Error as e:
         logger.error("Database error occurred: %s", e)
+        con.close()
         raise
 
 
