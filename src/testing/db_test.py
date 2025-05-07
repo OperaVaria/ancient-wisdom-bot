@@ -1,23 +1,37 @@
 """
 db_test.py
 
-Unittest class testing database functionality.
+Unittest class that tests database functionality.
 
 Part of the "Ancient Wisdom Daily" project by OperaVaria.
 """
 
-# Import built-in modules:
+# Imports from built-in modules:
 import sqlite3
-import unittest
+from contextlib import suppress
+from os import remove
+from shutil import copyfile
+from unittest import TestCase
 
 # Imports from local modules:
 from backend.db_func import db_get, db_reset, log_remaining
 from backend.classes import Wisdom
-from config.path_constants import TEMP_DB_COPY
+from config.path_constants import DB_FILE, TEMP_DIR, TEMP_DB_COPY, FAKE_DB_FILE
 
 
-class DatabaseTests(unittest.TestCase):
+class DatabaseTests(TestCase):
     """Database related unit tests."""
+
+    def setUp(self):
+        """Copy wisdoms.db file to temp dir.
+           Create temp dir if one does not exist."""
+        TEMP_DIR.mkdir(parents=True, exist_ok=True)
+        copyfile(DB_FILE, TEMP_DB_COPY)
+
+    def test_db_get_error_handling(self):
+        """Test db_get with invalid database path."""
+        with self.assertRaises(sqlite3.Error):
+            db_get(FAKE_DB_FILE)
 
     def test_db_get_returns_wisdom_object(self):
         """Test if db_get returns a valid Wisdom object."""
@@ -35,7 +49,6 @@ class DatabaseTests(unittest.TestCase):
         self.assertIsNotNone(wisdom.locus_formatted)
         self.assertIsNotNone(wisdom.comment)
         self.assertIsNotNone(wisdom.used)
-
 
     def test_db_reset_clears_used_flags(self):
         """Test if db_reset properly resets used flags."""
@@ -83,6 +96,12 @@ class DatabaseTests(unittest.TestCase):
         # Close and assert.
         con.close()
         self.assertEqual(result, expected, "Incorrect count of remaining items.")
+
+    def tearDown(self):
+        """Remove temporary files if they exist."""
+        with suppress(FileNotFoundError):
+            remove(TEMP_DB_COPY)
+            remove(FAKE_DB_FILE)
 
 
 # Print on accidental run:
