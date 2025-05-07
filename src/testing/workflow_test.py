@@ -38,7 +38,7 @@ class IntegrationTests(TestCase):
         mock_x_cl.create_tweet.return_value = {"id": "012"}
 
         # Patch dependencies.
-        with patch('backend.post_func.assemble_posts') as mock_assemble:
+        with patch("backend.post_func.assemble_posts") as mock_assemble:
 
             # Create real objects for mock assemble function.
             test_data = ("test_id", "original text", "translation text",
