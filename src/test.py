@@ -19,6 +19,7 @@ import testing.api_test as api_tests
 import testing.db_test as db_tests
 import testing.class_test as class_tests
 import testing.post_test as post_tests
+import testing.workflow_test as workflow_tests
 
 
 def run_tests(module):
@@ -61,7 +62,7 @@ def test_menu():
             case 3: # API
                 run_tests(api_tests)
             case 4: # Workflow
-                break
+                run_tests(workflow_tests)
             case 5: # Exit (break loop)
                 break
             case _:  # Incorrect selection (should not happen).
