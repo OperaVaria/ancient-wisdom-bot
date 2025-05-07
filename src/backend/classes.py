@@ -9,6 +9,7 @@ Part of the "Ancient Wisdom Daily" project by OperaVaria.
 # Built-in imports:
 import logging
 import textwrap
+import os
 from dataclasses import dataclass
 
 # Imports from external packages:
@@ -147,12 +148,15 @@ class ImagePost:
 
     def save_image(self, path):
         """
-        Save image to a specified path as a .jpg file,
-        assign location to self.path.
+        Saves image to a specified path as a .jpg file,
+        creates parent folder if does not exist,
+        assigns location to self.path.
         
         Args:
-            path: Path with desired location and file name.
+            path: Path or str with desired location and file name.
         """
+        if not os.path.exists(os.path.dirname(path)):
+            os.makedirs(os.path.dirname(path))
         self.image.save(path, "JPEG")
         self.path = path
 
