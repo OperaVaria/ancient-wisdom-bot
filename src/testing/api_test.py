@@ -9,7 +9,7 @@ Part of the "Ancient Wisdom Daily" project by OperaVaria.
 # Imports from built-in modules:
 from pathlib import Path
 from unittest import TestCase
-from unittest.mock import MagicMock, create_autospec
+from unittest.mock import MagicMock, create_autospec, patch
 
 # Imports from external packages:
 from atproto_client.exceptions import BadRequestError
@@ -19,7 +19,9 @@ from tweepy.errors import Forbidden
 
 # Imports from local modules:
 from backend.classes import TextPost, ImagePost
+from backend.multith_func import threaded_login
 from backend.post_func import bluesky_post, mastodon_post, x_post
+
 
 
 class APITests(TestCase):
@@ -97,6 +99,54 @@ class APITests(TestCase):
         self.assertEqual(self.mock_client.create_tweet.call_count, 2)
         self.mock_client.media_upload.assert_called_once()
         self.assertEqual(result, {"ok": True})
+
+    @patch('backend.multith_func.bluesky_login')
+    @patch('backend.multith_func.insta_login')
+    @patch('backend.multith_func.mastodon_login')
+    @patch('backend.multith_func.x_auth')
+    def test_threaded_login(self, mock_x_auth, mock_mastodon_login,
+                        mock_insta_login, mock_bluesky_login):
+        """Test concurrent login functionality."""
+
+        # Mock constants that are used in the function.
+        with patch('backend.multith_func.INSTA_SESSION', 'mock_session'), \
+            patch('backend.multith_func.INSTA_DELAY_RANGE', 'mock_delay'):
+
+            # Setup mock returns.
+            mock_bluesky_login.return_value = "bs_client"
+            mock_insta_login.return_value = "insta_client"
+            mock_mastodon_login.return_value = "mastodon_api"
+            mock_x_auth.return_value = ("x_api", "x_client")
+
+            # Test login data.
+            keys = {
+                "bluesky": {"handle": "test", "password": "test"},
+                "instagram": {"username": "test", "password": "test"},
+                "mastodon": {"access_token": "test", "api_base_uri": "test"},
+                "x": {"key": "value"}
+            }
+
+            # Call threaded_login function.
+            result = threaded_login(keys)
+
+            # Assert.
+            self.assertEqual(result, ("bs_client", "insta_client", "mastodon_api",
+                                      "x_api", "x_client"))
+            mock_bluesky_login.assert_called_once_with(
+                keys["bluesky"]["handle"],
+                keys["bluesky"]["password"]
+            )
+            mock_insta_login.assert_called_once_with(
+                keys["instagram"]["username"],
+                keys["instagram"]["password"],
+                'mock_session',
+                'mock_delay'
+            )
+            mock_mastodon_login.assert_called_once_with(
+                keys["mastodon"]["access_token"],
+                keys["mastodon"]["api_base_uri"]
+            )
+            mock_x_auth.assert_called_once_with(keys["x"])
 
 
 # Print on accidental run:
