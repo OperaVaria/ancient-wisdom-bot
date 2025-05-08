@@ -7,16 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+- None
 
-- Continuos database upgrade.
-
-## [2.1.0] - 2025.04.04
+## [2.1.0] - 2025.05.08
 
 ### Added
 
 - Mastodon functionality.
 - Accessibility text for image posts when available.
+- Robust unittesting.
 
 ### Changed
 
