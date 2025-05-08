@@ -58,7 +58,7 @@ class APITests(TestCase):
         self.mock_client.send_post.side_effect = BadRequestError(self.mock_response_failed)
         self.mock_client.send_image.return_value = {"ok": True}
 
-        # Test the function.
+        # Call function.
         result = bluesky_post(self.mock_client, self.mock_image_post, self.mock_text_post)
 
         # Assert.
@@ -75,7 +75,7 @@ class APITests(TestCase):
                                                     {"ok": True}]
         self.mock_client.media_post.return_value = {"id": 1}
 
-        # Test the function.
+        # Call function.
         result = mastodon_post(self.mock_client, self.mock_image_post, self.mock_text_post)
 
         # Assert.
@@ -91,7 +91,7 @@ class APITests(TestCase):
                                                      {"ok": True}]
         self.mock_client.media_upload.media_id = 1
 
-        # Test the function.
+        # Call function.
         result = x_post(self.mock_client, self.mock_client,
                         self.mock_image_post, self.mock_text_post)
 
@@ -118,7 +118,7 @@ class APITests(TestCase):
             mock_mastodon_login.return_value = "mastodon_api"
             mock_x_auth.return_value = ("x_api", "x_client")
 
-            # Test login data.
+            # Setup mock login data.
             keys = {
                 "bluesky": {"handle": "test", "password": "test"},
                 "instagram": {"username": "test", "password": "test"},
@@ -126,7 +126,7 @@ class APITests(TestCase):
                 "x": {"key": "value"}
             }
 
-            # Call threaded_login function.
+            # Call function.
             result = threaded_login(keys)
 
             # Assert.

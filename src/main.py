@@ -5,8 +5,7 @@ A multi-platform bot that is set up to post a random
 Ancient Greek or Roman quote every day, with translation
 and a short comment.
 
-TODO: 1. Manual testing.
-      2. Steadily add to database.
+TODO: 1. Steadily add to database.
 """
 
 # Imports from built-in modules:
@@ -18,8 +17,8 @@ from os.path import exists as os_exists
 from yaml import safe_load
 
 # Imports from local modules:
-from backend.post_func import assemble_posts
 from backend.multith_func import threaded_login, threaded_posting
+from backend.post_func import assemble_posts
 from config.path_constants import (DB_FILE, GENTIUM_REG_TTF, GENTIUM_BOLD_TTF,
                                    LOGIN_KEYS, TEMP_POST_IMG)
 from config.settings import IMG_SIZE, IMG_BG_COLOR, IMG_TEXT_COLOR
@@ -29,7 +28,7 @@ from config.settings import IMG_SIZE, IMG_BG_COLOR, IMG_TEXT_COLOR
 __author__ = "OperaVaria"
 __contact__ = "lcs_it@proton.me"
 __version__ = "2.1.0"
-__date__ = "2025.04.04"
+__date__ = "2025.05.08"
 
 # Licence:
 __license__ = "GPLv3"
