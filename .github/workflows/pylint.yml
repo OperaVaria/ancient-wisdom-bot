@@ -1,10 +1,7 @@
 name: Pylint
-
 permissions:
   contents: read
-
 on: [push]
-
 jobs:
   linting:
     name: pylint lint
